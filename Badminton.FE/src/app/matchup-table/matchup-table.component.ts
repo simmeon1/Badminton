@@ -23,6 +23,7 @@ import {
     MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {environment} from '../../environments/environment';
 
 @Component({
     selector: 'matchup-table',
@@ -85,7 +86,7 @@ export class MatchupTable {
                 courtCount: this.courtCount()
             }
         });
-        return `https://thebadinbadminton-api.onrender.com/api/?${params.toString()}`;
+        return `${environment.apiUrl}/api/?${params.toString()}`;
     });
 
     public readonly state = computed(() => {

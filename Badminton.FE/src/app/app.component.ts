@@ -1,3 +1,4 @@
+import {environment} from '../environments/environment';
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {HttpParams, httpResource} from "@angular/common/http";
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
@@ -38,7 +39,7 @@ export class App {
                 courtCount: p.courtCount
             }
         });
-        return `https://thebadinbadminton-api.onrender.com/api/?${params.toString()}`;
+        return `${environment.apiUrl}/api/?${params.toString()}`;
     });
     public readonly form = form(signal<Form>({
             names: `Alfa
