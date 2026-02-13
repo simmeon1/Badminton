@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy(
             name: myAllowSpecificOrigins,
-            policy => { policy.AllowAnyOrigin(); }
+            policy => { policy.WithOrigins($"{builder.Configuration.GetValue("UI_URL", "http://localhost:4200")}"); }
         );
     }
 );
