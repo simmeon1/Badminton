@@ -13,8 +13,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy(
             name: myAllowSpecificOrigins,
-            // policy => { policy.WithOrigins($"{builder.Configuration.GetValue("UI_URL", "http://localhost:4200")}"); }
-            policy => { policy.AllowAnyOrigin(); }
+            policy => { policy.WithOrigins($"{builder.Configuration.GetValue("UI_URL", "http://localhost:4200")}"); }
         );
     }
 );
@@ -42,6 +41,7 @@ app.MapGet(
 
 var logger = app.Logger;
 var keyValuePairs = app.Configuration.AsEnumerable();
-logger.LogInformation(string.Join("\n", keyValuePairs));
+var url = builder.Configuration.GetValue("UI_URL", "http://localhost:4200");
+logger.LogInformation(url);
 
 app.Run();
