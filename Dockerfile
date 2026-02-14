@@ -53,6 +53,6 @@ COPY --from=build /app .
 # and https://github.com/dotnet/dotnet-docker/discussions/4764
 USER $APP_UID
 
-EXPOSE $ASPNETCORE_HTTP_PORTS
+EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "Badminton.Api.dll"]
