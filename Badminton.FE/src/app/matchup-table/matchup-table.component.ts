@@ -173,7 +173,7 @@ export class MatchupTable {
             return;
         }
         moveItemInArray(dataSource, previousIndex, currentIndex);
-        if (this.selectedIndex() !== undefined) {
+        if (this.selectedIndex() === previousIndex) {
             this.selectedIndex.set(currentIndex);
         }
         this.updatedPlayerRowsDatasource.set(dataSource);
