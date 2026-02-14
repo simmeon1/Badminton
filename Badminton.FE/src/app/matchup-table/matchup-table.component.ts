@@ -74,7 +74,7 @@ export class MatchupTable {
     ];
 
     private readonly updatedPlayerRowsDatasource = signal<PlayerRow[] | undefined>(undefined);
-    private httpResourceRef = httpResource<Response>(() => {
+    public readonly httpResourceRef = httpResource<Response>(() => {
         const updatedDatasource = this.updatedPlayerRowsDatasource();
         if (!updatedDatasource) {
             return undefined;
