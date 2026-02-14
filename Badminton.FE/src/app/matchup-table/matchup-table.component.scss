@@ -12,62 +12,21 @@
     opacity: 0.5;
     pointer-events: none;
   }
+}
 
-  .mat-mdc-row {
-    //padding: 20px 10px;
-    //border-bottom: solid 1px #ccc;
-    color: rgba(0, 0, 0, 0.87);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    //cursor: move;
-    //background: white;
-    font-size: 14px;//
-    font-family: sans-serif;
-
-    &.even-court {
-      background-color: rgb(211, 211, 211, 0.3);
-    }
-
-    &.selected-row {
-      background-color: lightblue;
-    }
-
-    &.partner-of-selected {
-      background-color: lightgreen;
-    }
-
-    .handle {
-      cursor: move;
-    }
-  }
-
-  .mat-mdc-cell, .mat-mdc-header-cell {
-    padding: 0 4px
-  }
-
-  .mat-column-position {
-    padding-left: 12px;
-    flex: 0 1 50px
-  }
-
-  .mat-column-courtIndex {
-    flex: 0 1 50px
-  }
-
-  .mat-column-playerIndex {
-    flex: 0 1 40px
-  }
-
-  .mat-column-name {
-    flex: 0 1 70px
-  }
-
-  .mat-column-matchups {
-    white-space: pre;
-  }
+.mat-mdc-row {
+  //padding: 20px 10px;
+  //border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  //cursor: move;
+  //background: white;
+  font-size: 14px;
+  font-family: sans-serif;
 }
 
 .cdk-drag-preview {
@@ -93,6 +52,47 @@
 
 .mat-mdc-table.cdk-drop-list-dragging .mat-mdc-row:not(.cdk-drag-placeholder) {
   transition: transform 100ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.handle {
+  cursor: move;
+}
+
+.mat-mdc-cell, .mat-mdc-header-cell {
+  padding: 0 4px
+}
+
+.mat-column-position {
+  padding-left: 12px;
+  flex: 0 1 50px
+}
+
+.mat-column-courtIndex {
+  flex: 0 1 50px
+}
+
+.mat-column-playerIndex {
+  flex: 0 1 40px
+}
+
+.mat-column-name {
+  flex: 0 1 70px
+}
+
+.mat-column-matchups {
+  white-space: pre;
+}
+
+.even-court {
+  background-color: rgb(211, 211, 211, 0.3);
+}
+
+.selected-row {
+  background-color: lightblue;
+}
+
+.partner-of-selected {
+  background-color: lightgreen;
 }
 
 ::ng-deep .mat-expansion-panel-body {
