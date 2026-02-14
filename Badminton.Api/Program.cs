@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using Badminton.Core;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,10 +37,5 @@ app.MapGet(
         [Required] [Range(1, 10)] int courtCount
     ) => new MatchupBuilder().GetMatchups(names, minGames, courtCount)
 );
-
-var logger = app.Logger;
-var keyValuePairs = app.Configuration.AsEnumerable();
-var url = builder.Configuration.GetValue("UI_URL", "http://localhost:4200");
-logger.LogInformation(url);
 
 app.Run();
