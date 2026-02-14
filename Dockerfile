@@ -12,7 +12,7 @@
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 
 # Create a stage for building the application.
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-preview-noble-chiseled AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
 
 COPY . /source
 
@@ -53,6 +53,6 @@ COPY --from=build /app .
 # and https://github.com/dotnet/dotnet-docker/discussions/4764
 USER $APP_UID
 
-EXPOSE 8080
+EXPOSE $ASPNETCORE_HTTP_PORTS
 
 ENTRYPOINT ["dotnet", "Badminton.Api.dll"]
