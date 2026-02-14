@@ -86,7 +86,7 @@ export class MatchupTable {
                 courtCount: this.courtCount()
             }
         });
-        return `${environment.apiUrl}/api/?${params.toString()}`;
+        return `${environment.UI_URL}/api/?${params.toString()}`;
     });
 
     public readonly state = computed(() => {

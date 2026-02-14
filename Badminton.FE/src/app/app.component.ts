@@ -39,7 +39,7 @@ export class App {
                 courtCount: p.courtCount
             }
         });
-        return `${environment.apiUrl}/api/?${params.toString()}`;
+        return `${environment.UI_URL}/api/?${params.toString()}`;
     });
     public readonly form = form(signal<Form>({
             names: `Alfa
