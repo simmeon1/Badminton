@@ -24,7 +24,7 @@
     box-sizing: border-box;
     //cursor: move;
     //background: white;
-    font-size: 14px;
+    font-size: 14px;//
     font-family: sans-serif;
 
     &.even-court {
@@ -42,31 +42,31 @@
     .handle {
       cursor: move;
     }
+  }
 
-    .mat-mdc-cell, .mat-mdc-header-cell {
-      padding: 0 4px
-    }
+  .mat-mdc-cell, .mat-mdc-header-cell {
+    padding: 0 4px
+  }
 
-    .mat-column-position {
-      padding-left: 12px;
-      flex: 0 1 50px
-    }
+  .mat-column-position {
+    padding-left: 12px;
+    flex: 0 1 50px
+  }
 
-    .mat-column-courtIndex {
-      flex: 0 1 50px
-    }
+  .mat-column-courtIndex {
+    flex: 0 1 50px
+  }
 
-    .mat-column-playerIndex {
-      flex: 0 1 40px
-    }
+  .mat-column-playerIndex {
+    flex: 0 1 40px
+  }
 
-    .mat-column-name {
-      flex: 0 1 70px
-    }
+  .mat-column-name {
+    flex: 0 1 70px
+  }
 
-    .mat-column-matchups {
-      white-space: pre;
-    }
+  .mat-column-matchups {
+    white-space: pre;
   }
 }
 
