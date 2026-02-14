@@ -30,7 +30,7 @@ app.UseHttpsRedirection();
 app.UseCors(myAllowSpecificOrigins);
 
 app.MapGet(
-    "/api/",
+    "/api/matchups",
     (
         [Required] string[] names,
         [Required] [Range(1, 10)] int minGames,

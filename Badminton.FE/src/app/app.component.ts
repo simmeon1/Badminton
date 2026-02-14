@@ -32,6 +32,9 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 export class App {
     public readonly state = httpResource<Response>(() => {
         const p = this.fetchWithParams();
+        if (!p) {
+          return undefined;
+        }
         const params = new HttpParams({
             fromObject: {
                 names: p.names,
@@ -39,7 +42,7 @@ export class App {
                 courtCount: p.courtCount
             }
         });
-        return `${environment.API_URL}/api/?${params.toString()}`;
+        return `${environment.API_URL}/api/matchups?${params.toString()}`;
     });
     public readonly form = form(signal<Form>({
             names: `Alfa
@@ -68,7 +71,7 @@ Mike`,
             max(schemaPath.courtCount, 10);
         }
     );
-    private readonly fetchWithParams = signal<Params>(this.getParamsFromForm());
+    private readonly fetchWithParams = signal<Params | undefined>(undefined);
     public readonly selectedTab = signal<number>(0);
 
     private getParamsFromForm(): Params {
