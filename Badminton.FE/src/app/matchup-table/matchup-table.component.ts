@@ -56,17 +56,19 @@ export class MatchupTable {
         const latestResponse = this.latestResponse();
         return latestResponse ? this.mapResponse(latestResponse) : this.localDatasource();
     });
-    public readonly selectedIndex = computed(() => {
+    public readonly selectedRow = computed(() => {
         const selectedPlayer = this.selectedPlayer();
-        if (!selectedPlayer) {
+        if (selectedPlayer === undefined) {
             return undefined;
         }
-        const index = this.dataSource().findIndex(n => n.name === selectedPlayer);
-        return index === -1 ? undefined : index
-    });
-    private readonly selectedRow = computed(() => {
-        const selectedIndex = this.selectedIndex();
-        return selectedIndex === undefined ? undefined : this.dataSource()[selectedIndex];
+        for (let i = 0; i < this.dataSource().length; i++){
+            const row = this.dataSource()[i];
+            if (row.name === selectedPlayer) {
+                const result: SelectedIndexAndRow = {index: i, row}
+                return result;
+            }
+        }
+        return undefined;
     });
 
     private mapResponse(r: Response): PlayerRow[] {
@@ -100,7 +102,7 @@ export class MatchupTable {
             return;
         }
         moveItemInArray(dataSource, previousIndex, currentIndex);
-        if (this.selectedIndex() === previousIndex) {
+        if (this.selectedRow()?.index === previousIndex) {
             this.selectedPlayerChanged.emit(movedName)
         }
         this.localDatasource.set(dataSource);
@@ -116,7 +118,7 @@ export class MatchupTable {
     }
 
     public isPartnerOfSelected(name: string) {
-        return this.selectedRow()?.partners.includes(name);
+        return this.selectedRow()?.row.partners.includes(name);
     }
 }
 
@@ -125,4 +127,9 @@ interface PlayerRow {
     playerIndex: string
     name: string
     partners: string[]
+}
+
+interface SelectedIndexAndRow {
+    index: number
+    row: PlayerRow
 }

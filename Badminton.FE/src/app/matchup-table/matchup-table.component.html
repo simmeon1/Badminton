@@ -42,7 +42,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row (click)="selectIndex(row.name)"
                  *matRowDef="let row; columns: displayedColumns; let i = index" cdkDrag [cdkDragData]="row"
-                 [class.selected-row]="i === selectedIndex()"
+                 [class.selected-row]="row === selectedRow()?.row"
                  [class.even-court]="row.courtIndex % 2 === 0"
                  [class.partner-of-selected]="isPartnerOfSelected(row.name)"
         >
