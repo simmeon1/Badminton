@@ -30,20 +30,6 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 })
 
 export class App {
-    public readonly state = httpResource<Response>(() => {
-        const p = this.fetchWithParams();
-        if (!p) {
-          return undefined;
-        }
-        const params = new HttpParams({
-            fromObject: {
-                names: p.names,
-                minGames: p.minGames,
-                courtCount: p.courtCount
-            }
-        });
-        return `${environment.API_URL}/api/matchups?${params.toString()}`;
-    });
     public readonly form = form(signal<Form>({
             names: `Alfa
 Bravo
@@ -71,10 +57,24 @@ Mike`,
             max(schemaPath.courtCount, 10);
         }
     );
-    private readonly fetchWithParams = signal<Params | undefined>(undefined);
-    public readonly selectedTab = signal<number>(0);
+  public readonly formParams = signal<FormParams | undefined>(undefined);
+  public readonly responseResource = httpResource<Response>(() => {
+    const p = this.formParams();
+    if (!p) {
+      return undefined;
+    }
+    const params = new HttpParams({
+      fromObject: {
+        names: p.names,
+        minGames: p.minGames,
+        courtCount: p.courtCount
+      }
+    });
+    return `${environment.API_URL}/api/matchups?${params.toString()}`;
+  });
+  public readonly selectedTab = signal<number>(0);
 
-    private getParamsFromForm(): Params {
+    private getFormParams(): FormParams {
         return {
             names: this.form.names().value().split('\n').map(n => n.trim()),
             minGames: this.form.minGames().value(),
@@ -84,11 +84,11 @@ Mike`,
 
     public onSubmit($event: SubmitEvent) {
         $event.preventDefault();
-        const p = this.getParamsFromForm();
+        const p = this.getFormParams();
         if (this.form.shuffle().value()) {
             shuffle(p.names);
         }
-        this.fetchWithParams.set(p);
+        this.formParams.set(p);
         this.selectedTab.set(1);
     }
 }
@@ -110,7 +110,7 @@ export interface Pairing {
     player2: string;
 }
 
-interface Params {
+export interface FormParams {
     names: string[];
     minGames: number;
     courtCount: number;

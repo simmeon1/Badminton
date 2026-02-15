@@ -23,18 +23,17 @@
                 <div>
                     <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
                 </div>
-                <button matButton="filled" type="submit" [disabled]="form().invalid() || state.isLoading()">Submit
+                <button matButton="filled" type="submit" [disabled]="form().invalid() || responseResource.isLoading()">Submit
                 </button>
             </div>
         </form>
     </mat-tab>
     <mat-tab label="Results">
-        @if (state.hasValue()) {
-            <matchup-table [inputRows]="state.value()" [minGames]="form.minGames().value()"
-                           [courtCount]="form.courtCount().value()"></matchup-table>
-        } @else if (state.error()) {
+        @if (responseResource.hasValue()) {
+            <matchup-table [formParams]="formParams" [responseResource]="responseResource"></matchup-table>
+        } @else if (responseResource.error()) {
             Something went wrong. Is the form valid?
-        } @else if (state.isLoading()) {
+        } @else if (responseResource.isLoading()) {
             Loading...
         } @else {
             Submit the form to get results.
