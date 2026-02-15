@@ -1,11 +1,22 @@
 import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {Pairing, Response} from '../app.component';
+import {
+    MatAccordion,
+    MatExpansionPanel, MatExpansionPanelDescription,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+} from '@angular/material/expansion';
 
 @Component({
   selector: 'matchups-print',
     imports: [
-        MatCheckbox
+        MatCheckbox,
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        MatExpansionPanelDescription
     ],
   templateUrl: './matchups-print.component.html',
   styleUrl: './matchups-print.component.scss',

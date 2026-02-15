@@ -14,6 +14,12 @@ import {
 } from "@angular/material/table";
 import {CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
+import {
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelDescription,
+    MatExpansionPanelHeader, MatExpansionPanelTitle
+} from '@angular/material/expansion';
 
 @Component({
     selector: 'matchup-table',
@@ -32,7 +38,12 @@ import {MatIcon} from "@angular/material/icon";
         MatHeaderRowDef,
         MatRowDef,
         CdkDragHandle,
-        MatNoDataRow
+        MatNoDataRow,
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelDescription,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle
     ],
     templateUrl: './matchup-table.component.html',
     styleUrl: './matchup-table.component.scss',

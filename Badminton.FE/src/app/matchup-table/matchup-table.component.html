@@ -1,12 +1,20 @@
 <ng-container>
-    <div>
-        <ul>
-            <li>Populate Form above and hit Submit to repopulate table.</li>
-            <li>Drag and drop players using the left most cell. Indexes and pairings will get updated.</li>
-            <li>Click on player to highlight/unhighlight them along with the partners they will play with.</li>
-            <li>Even-numbered courts have a darker shade.</li>
-        </ul>
-    </div>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Instructions</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+                <ul>
+                    <li>Populate Form above and hit Submit to repopulate table.</li>
+                    <li>Drag and drop players using the left most cell. Indexes and pairings will get updated.</li>
+                    <li>Click on player to highlight/unhighlight them along with the partners they will play with.</li>
+                    <li>Even-numbered courts have a darker shade.</li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                     table,

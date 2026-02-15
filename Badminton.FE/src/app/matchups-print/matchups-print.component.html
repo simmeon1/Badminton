@@ -1,11 +1,19 @@
 <ng-container>
-    <div>
-        <ul>
-            <li>Matchups are produced by the ordering in the Players table.</li>
-            <li>Player selection in the Players table carries over here. The matchup text is sorted to include the player at the start for easy identification.</li>
-            <li>Checkboxes are only to help with tracking games.</li>
-        </ul>
-    </div>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Instructions</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>Matchups are produced by the ordering in the Players table.</li>
+                <li>Player selection in the Players table carries over here. The matchup text is sorted to include
+                    the player at the start for easy identification.
+                </li>
+                <li>Checkboxes are only to help with tracking games.</li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
     @if (matchups().length === 0) {
         @if (isLoading()) {
             Loading...
@@ -17,7 +25,9 @@
             <h1>Court {{ courtMatchups.courtIndex }}</h1>
             @for (courtMatchup of courtMatchups.matchups; track courtMatchup) {
                 <div>
-                    <mat-checkbox><span [class.selected-row]="isPlayerSelected(courtMatchup)">{{ courtMatchup }}</span></mat-checkbox>
+                    <mat-checkbox><span
+                            [class.selected-row]="isPlayerSelected(courtMatchup)">{{ courtMatchup }}</span>
+                    </mat-checkbox>
                 </div>
             } @empty {
                 <div>Nothing to display. Did you submit the form?</div>
