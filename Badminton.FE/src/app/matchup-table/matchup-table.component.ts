@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, Input, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input, signal} from '@angular/core';
 import {FormParams, Matchup, Pairing, Response} from "../app.component";
 import {
     MatCell,
@@ -57,7 +57,6 @@ import {environment} from '../../environments/environment';
 export class MatchupTable {
     public readonly inputResponse = input.required<Response>();
     public readonly formParams = input.required<FormParams>();
-
     public readonly selectedIndex = signal<number | undefined>(undefined);
     private readonly selectedRow = computed(() => {
         const selectedIndex = this.selectedIndex();
@@ -72,33 +71,28 @@ export class MatchupTable {
         'matchups',
     ];
 
-    private readonly reorderedNames = signal<string[] | undefined>(undefined);
-    private readonly reorderedDatasource = signal<PlayerRow[]>(this.mapResponse(this.inputResponse()));
-    private readonly latestResponse = computed(() => {
-        if (!this.reorderedNames()) {
-            return this.inputResponse();
-        }
-        return this.httpResourceRef.value();
-    });
+    private readonly allowRequest = signal<boolean>(false);
+    private readonly localDatasource = signal<PlayerRow[]>(this.mapResponse(this.inputResponse()));
+    private readonly latestResponse = computed(() =>
+        this.allowRequest() ? this.httpResourceRef.value() : this.inputResponse());
 
     public readonly httpResourceRef = httpResource<Response>(() => {
-        const orderedNames = this.reorderedNames();
-        if (!orderedNames) {
+        if (!this.allowRequest()) {
             return undefined;
         }
-        const params = new HttpParams({
-            fromObject: {
-                names: orderedNames,
-                minGames: this.formParams().minGames,
-                courtCount: this.formParams().courtCount
-            }
-        });
+
+        const p: Required<FormParams> = {
+            names: this.localDatasource().map(r => r.name),
+            minGames: this.formParams().minGames,
+            courtCount: this.formParams().courtCount
+        }
+        const params = new HttpParams({fromObject: p});
         return `${environment.API_URL}/api/matchups?${params.toString()}`;
     });
 
     public readonly dataSource = computed((): PlayerRow[] => {
         const latestResponse = this.latestResponse();
-        return latestResponse ? this.mapResponse(latestResponse) : this.reorderedDatasource();
+        return latestResponse ? this.mapResponse(latestResponse) : this.localDatasource();
     });
 
     public readonly matchups = computed((): MatchupText[] => {
@@ -172,8 +166,8 @@ export class MatchupTable {
         if (this.selectedIndex() === previousIndex) {
             this.selectedIndex.set(currentIndex);
         }
-        this.reorderedNames.set(names);
-        this.reorderedDatasource.set(dataSource);
+        this.allowRequest.set(true);
+        this.localDatasource.set(dataSource);
     }
 
     public trackByName(index: number, item: PlayerRow): string {
