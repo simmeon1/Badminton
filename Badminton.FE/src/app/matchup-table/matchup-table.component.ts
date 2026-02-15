@@ -71,13 +71,13 @@ export class MatchupTable {
         'matchups',
     ];
 
-    private readonly allowRequest = signal<boolean>(false);
     private readonly localDatasource = signal<PlayerRow[]>([]);
+    private readonly datasourceChanged = computed(() => this.localDatasource().length > 0);
     private readonly latestResponse = computed(() =>
-        this.allowRequest() ? this.httpResourceRef.value() : this.inputResponse());
+        this.datasourceChanged() ? this.httpResourceRef.value() : this.inputResponse());
 
     public readonly httpResourceRef = httpResource<Response>(() => {
-        if (!this.allowRequest()) {
+        if (!this.datasourceChanged()) {
             return undefined;
         }
 
@@ -166,7 +166,6 @@ export class MatchupTable {
         if (this.selectedIndex() === previousIndex) {
             this.selectedIndex.set(currentIndex);
         }
-        this.allowRequest.set(true);
         this.localDatasource.set(dataSource);
     }
 
