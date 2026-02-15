@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, input, output, signal} from '@angular/core';
-import {FormParams, Matchup, Pairing, Response} from "../app.component";
+import {Matchup, Pairing, Response} from "../app.component";
 import {
     MatCell,
     MatCellDef,
@@ -7,21 +7,13 @@ import {
     MatHeaderCell,
     MatHeaderCellDef,
     MatHeaderRow,
-    MatHeaderRowDef,
+    MatHeaderRowDef, MatNoDataRow,
     MatRow,
     MatRowDef,
     MatTable
 } from "@angular/material/table";
 import {CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
-import {
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelDescription,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle
-} from "@angular/material/expansion";
-import {MatCheckbox} from "@angular/material/checkbox";
 
 @Component({
     selector: 'matchup-table',
@@ -40,12 +32,7 @@ import {MatCheckbox} from "@angular/material/checkbox";
         MatHeaderRowDef,
         MatRowDef,
         CdkDragHandle,
-        MatAccordion,
-        MatExpansionPanel,
-        MatExpansionPanelHeader,
-        MatExpansionPanelTitle,
-        MatExpansionPanelDescription,
-        MatCheckbox
+        MatNoDataRow
     ],
     templateUrl: './matchup-table.component.html',
     styleUrl: './matchup-table.component.scss',
@@ -53,7 +40,7 @@ import {MatCheckbox} from "@angular/material/checkbox";
 })
 
 export class MatchupTable {
-    public readonly latestResponse = input.required<Response | undefined>();
+    public readonly latestResponse = input<Response>();
     public readonly isLoading = input.required<boolean>();
     public readonly datasourceChanged = output<string[]>();
     public readonly selectedIndex = signal<number | undefined>(undefined);
@@ -75,24 +62,6 @@ export class MatchupTable {
     public readonly dataSource = computed((): PlayerRow[] => {
         const latestResponse = this.latestResponse();
         return latestResponse ? this.mapResponse(latestResponse) : this.localDatasource();
-    });
-
-    public readonly matchups = computed((): MatchupText[] => {
-        const result: MatchupText[] = [];
-        const latestResponse = this.latestResponse();
-        if (!latestResponse) {
-            return [];
-        }
-        for (const [courtIndex, matchupCollection] of Object.entries(latestResponse)) {
-            result.push({
-                courtIndex,
-                matchups: matchupCollection.matchups.map(m => {
-                    const getPairingText = (p: Pairing) => `${p.player1}-${p.player2}`
-                    return `${getPairingText(m.pairing1)} v. ${getPairingText(m.pairing2)}`
-                })
-            });
-        }
-        return result;
     });
 
     private mapResponse(r: Response): PlayerRow[] {
@@ -171,9 +140,4 @@ interface PlayerRow {
     name: string
     partners: string[]
     matchups: string
-}
-
-interface MatchupText {
-    courtIndex: string
-    matchups: string[]
 }

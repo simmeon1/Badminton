@@ -29,9 +29,12 @@
             </div>
         </form>
     </mat-tab>
-    <mat-tab label="Results">
+    <mat-tab label="Players">
         <matchup-table [latestResponse]="responseResource.value()"
                        [isLoading]="responseResource.isLoading()"
                        (datasourceChanged)="datasourceChanged($event)"></matchup-table>
+    </mat-tab>
+    <mat-tab label="Matches">
+        <matchups-print [latestResponse]="responseResource.value()" [isLoading]="responseResource.isLoading()"></matchups-print>
     </mat-tab>
 </mat-tab-group>

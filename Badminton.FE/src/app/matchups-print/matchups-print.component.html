@@ -1,0 +1,28 @@
+<ng-container>
+    <div>
+        <ul>
+            <li>This is a reflection of the table state in the Players Table.</li>
+            <li>Checkboxes are only to help with tracking games.</li>
+        </ul>
+    </div>
+    @if (matchups().length === 0) {
+        @if (isLoading()) {
+            Loading...
+        } @else {
+            Nothing to display. Did you submit the form?
+        }
+    } @else {
+        @for (courtMatchups of matchups(); track courtMatchups.courtIndex) {
+            <h1>Court {{ courtMatchups.courtIndex }}</h1>
+            @for (courtMatchup of courtMatchups.matchups; track courtMatchup) {
+                <div>
+                    <mat-checkbox>{{ courtMatchup }}</mat-checkbox>
+                </div>
+            } @empty {
+                <div>Nothing to display. Did you submit the form?</div>
+            }
+        } @empty {
+            <div>Nothing to display. Did you submit the form?</div>
+        }
+    }
+</ng-container>

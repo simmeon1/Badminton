@@ -9,6 +9,7 @@ import {MatButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
 import {MatchupTable} from "./matchup-table/matchup-table.component";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {MatchupsPrint} from './matchups-print/matchups-print.component';
 
 @Component({
     selector: 'app-root',
@@ -22,7 +23,8 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
         FormField,
         MatchupTable,
         MatTabGroup,
-        MatTab
+        MatTab,
+        MatchupsPrint
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
