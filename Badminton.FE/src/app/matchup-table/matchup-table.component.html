@@ -18,8 +18,7 @@
                        (cdkDropListDropped)="drop(
                     table,
                     $event.item.data.name,
-                    $event.currentIndex,
-                    latestResponse()
+                    $event.currentIndex
                )"
                        cdkDropListData="dataSource"
                        [trackBy]="trackByName"
