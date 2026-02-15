@@ -72,7 +72,7 @@ export class MatchupTable {
     ];
 
     private readonly allowRequest = signal<boolean>(false);
-    private readonly localDatasource = signal<PlayerRow[]>(this.mapResponse(this.inputResponse()));
+    private readonly localDatasource = signal<PlayerRow[]>([]);
     private readonly latestResponse = computed(() =>
         this.allowRequest() ? this.httpResourceRef.value() : this.inputResponse());
 
