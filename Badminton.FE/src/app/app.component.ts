@@ -12,18 +12,18 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 
 @Component({
     selector: 'app-root',
-  imports: [
-    MatFormField,
-    MatLabel,
-    CdkTextareaAutosize,
-    MatInput,
-    MatCheckbox,
-    MatButton,
-    FormField,
-    MatchupTable,
-    MatTabGroup,
-    MatTab
-  ],
+    imports: [
+        MatFormField,
+        MatLabel,
+        CdkTextareaAutosize,
+        MatInput,
+        MatCheckbox,
+        MatButton,
+        FormField,
+        MatchupTable,
+        MatTabGroup,
+        MatTab
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -57,22 +57,22 @@ Mike`,
             max(schemaPath.courtCount, 10);
         }
     );
-  public readonly formParams = signal<FormParams | undefined>(undefined);
-  public readonly responseResource = httpResource<Response>(() => {
-    const p = this.formParams();
-    if (!p) {
-      return undefined;
-    }
-    const params = new HttpParams({
-      fromObject: {
-        names: p.names,
-        minGames: p.minGames,
-        courtCount: p.courtCount
-      }
+    public readonly formParams = signal<FormParams | undefined>(undefined);
+    public readonly responseResource = httpResource<Response>(() => {
+        const p = this.formParams();
+        if (!p) {
+            return undefined;
+        }
+        const params = new HttpParams({
+            fromObject: {
+                names: p.names,
+                minGames: p.minGames,
+                courtCount: p.courtCount
+            }
+        });
+        return `${environment.API_URL}/api/matchups?${params.toString()}`;
     });
-    return `${environment.API_URL}/api/matchups?${params.toString()}`;
-  });
-  public readonly selectedTab = signal<number>(0);
+    public readonly selectedTab = signal<number>(0);
 
     private getFormParams(): FormParams {
         return {
