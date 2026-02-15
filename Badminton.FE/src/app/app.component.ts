@@ -91,6 +91,14 @@ Mike`,
         this.formParams.set(p);
         this.selectedTab.set(1);
     }
+
+    public datasourceChanged(names: string[]) {
+        this.formParams.set({
+            names,
+            minGames: this.form.minGames().value(),
+            courtCount: this.form.courtCount().value()
+        });
+    }
 }
 
 export type Response = Record<string, MatchupCollection>;

@@ -22,7 +22,7 @@
                )"
                        cdkDropListData="dataSource"
                        [trackBy]="trackByName"
-                       [class.is-loading]="httpResourceRef.isLoading()"
+                       [class.is-loading]="isLoading()"
             >
                 <ng-container matColumnDef="position" sticky>
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>

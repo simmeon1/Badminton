@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input, output, signal} from '@angular/core';
 import {FormParams, Matchup, Pairing, Response} from "../app.component";
 import {
     MatCell,
@@ -14,7 +14,6 @@ import {
 } from "@angular/material/table";
 import {CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray} from "@angular/cdk/drag-drop";
 import {MatIcon} from "@angular/material/icon";
-import {HttpParams, httpResource} from "@angular/common/http";
 import {
     MatAccordion,
     MatExpansionPanel,
@@ -23,7 +22,6 @@ import {
     MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {environment} from '../../environments/environment';
 
 @Component({
     selector: 'matchup-table',
@@ -55,8 +53,9 @@ import {environment} from '../../environments/environment';
 })
 
 export class MatchupTable {
-    public readonly inputResponse = input.required<Response>();
-    public readonly formParams = input.required<FormParams>();
+    public readonly latestResponse = input.required<Response | undefined>();
+    public readonly isLoading = input.required<boolean>();
+    public readonly datasourceChanged = output<string[]>();
     public readonly selectedIndex = signal<number | undefined>(undefined);
     private readonly selectedRow = computed(() => {
         const selectedIndex = this.selectedIndex();
@@ -72,23 +71,6 @@ export class MatchupTable {
     ];
 
     private readonly localDatasource = signal<PlayerRow[]>([]);
-    private readonly datasourceChanged = computed(() => this.localDatasource().length > 0);
-    private readonly latestResponse = computed(() =>
-        this.datasourceChanged() ? this.httpResourceRef.value() : this.inputResponse());
-
-    public readonly httpResourceRef = httpResource<Response>(() => {
-        if (!this.datasourceChanged()) {
-            return undefined;
-        }
-
-        const p: Required<FormParams> = {
-            names: this.localDatasource().map(r => r.name),
-            minGames: this.formParams().minGames,
-            courtCount: this.formParams().courtCount
-        }
-        const params = new HttpParams({fromObject: p});
-        return `${environment.API_URL}/api/matchups?${params.toString()}`;
-    });
 
     public readonly dataSource = computed((): PlayerRow[] => {
         const latestResponse = this.latestResponse();
@@ -167,6 +149,7 @@ export class MatchupTable {
             this.selectedIndex.set(currentIndex);
         }
         this.localDatasource.set(dataSource);
+        this.datasourceChanged.emit(dataSource.map(r => r.name))
     }
 
     public trackByName(index: number, item: PlayerRow): string {
