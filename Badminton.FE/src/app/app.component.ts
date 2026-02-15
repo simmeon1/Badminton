@@ -11,7 +11,7 @@ import {MatchupTable} from "./matchup-table/matchup-table.component";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 
 @Component({
-  selector: 'app-root',
+    selector: 'app-root',
   imports: [
     MatFormField,
     MatLabel,
@@ -24,14 +24,14 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
     MatTabGroup,
     MatTab
   ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class App {
-  public readonly form = form(signal<Form>({
-      names: `Alfa
+    public readonly form = form(signal<Form>({
+            names: `Alfa
 Bravo
 Charlie
 Delta
@@ -44,19 +44,19 @@ Juliett
 Kilo
 Lima
 Mike`,
-      minGames: 4,
-      courtCount: 2,
-      shuffle: false
-    }), (schemaPath) => {
-      required(schemaPath.names);
-      required(schemaPath.minGames);
-      min(schemaPath.minGames, 1);
-      max(schemaPath.minGames, 10);
-      required(schemaPath.courtCount);
-      min(schemaPath.courtCount, 1);
-      max(schemaPath.courtCount, 10);
-    }
-  );
+            minGames: 4,
+            courtCount: 2,
+            shuffle: false
+        }), (schemaPath) => {
+            required(schemaPath.names);
+            required(schemaPath.minGames);
+            min(schemaPath.minGames, 1);
+            max(schemaPath.minGames, 10);
+            required(schemaPath.courtCount);
+            min(schemaPath.courtCount, 1);
+            max(schemaPath.courtCount, 10);
+        }
+    );
   public readonly formParams = signal<FormParams | undefined>(undefined);
   public readonly responseResource = httpResource<Response>(() => {
     const p = this.formParams();
@@ -74,51 +74,51 @@ Mike`,
   });
   public readonly selectedTab = signal<number>(0);
 
-  private getFormParams(): FormParams {
-    return {
-      names: this.form.names().value().split('\n').map(n => n.trim()),
-      minGames: this.form.minGames().value(),
-      courtCount: this.form.courtCount().value()
+    private getFormParams(): FormParams {
+        return {
+            names: this.form.names().value().split('\n').map(n => n.trim()),
+            minGames: this.form.minGames().value(),
+            courtCount: this.form.courtCount().value()
+        }
     }
-  }
 
-  public onSubmit($event: SubmitEvent) {
-    $event.preventDefault();
-    const p = this.getFormParams();
-    if (this.form.shuffle().value()) {
-      shuffle(p.names);
+    public onSubmit($event: SubmitEvent) {
+        $event.preventDefault();
+        const p = this.getFormParams();
+        if (this.form.shuffle().value()) {
+            shuffle(p.names);
+        }
+        this.formParams.set(p);
+        this.selectedTab.set(1);
     }
-    this.formParams.set(p);
-    this.selectedTab.set(1);
-  }
 }
 
 export type Response = Record<string, MatchupCollection>;
 
 export interface MatchupCollection {
-  players: Record<string, string>;
-  matchups: Matchup[];
+    players: Record<string, string>;
+    matchups: Matchup[];
 }
 
 export interface Matchup {
-  pairing1: Pairing;
-  pairing2: Pairing;
+    pairing1: Pairing;
+    pairing2: Pairing;
 }
 
 export interface Pairing {
-  player1: string;
-  player2: string;
+    player1: string;
+    player2: string;
 }
 
 export interface FormParams {
-  names: string[];
-  minGames: number;
-  courtCount: number;
+    names: string[];
+    minGames: number;
+    courtCount: number;
 }
 
 interface Form {
-  names: string;
-  minGames: number;
-  courtCount: number;
-  shuffle: boolean;
+    names: string;
+    minGames: number;
+    courtCount: number;
+    shuffle: boolean;
 }
