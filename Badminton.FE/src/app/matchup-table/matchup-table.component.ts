@@ -72,13 +72,15 @@ export class MatchupTable {
         'matchups',
     ];
 
-    private readonly updatedDatasource = signal<PlayerRow[] | undefined>(undefined);
+    private readonly updatedDatasource = signal<Update | undefined>(undefined);
 
     public readonly latestResponse = computed(() => {
-        if (!this.updatedDatasource()) {
+        let updatedDatasource = this.updatedDatasource();
+        if (!updatedDatasource) {
             return this.inputResponse();
         }
-        return this.httpResourceRef.value();
+        let value = this.httpResourceRef.value();
+        return value ?? updatedDatasource.latestResponse;
     });
 
     public readonly httpResourceRef = httpResource<Response>(() => {
@@ -88,7 +90,7 @@ export class MatchupTable {
         }
         const params = new HttpParams({
             fromObject: {
-                names: updatedDatasource.map(r => r.name),
+                names: updatedDatasource.rows.map(r => r.name),
                 minGames: this.formParams().minGames,
                 courtCount: this.formParams().courtCount
             }
@@ -98,19 +100,13 @@ export class MatchupTable {
 
     public readonly playerRowsDatasource = computed((): PlayerRow[] => {
         const updatedDatasource = this.updatedDatasource();
-        if (!updatedDatasource) {
-            return this.mapResponse(this.inputResponse());
-        }
-        const latestResponse = this.latestResponse();
-        return latestResponse ? this.mapResponse(latestResponse) : updatedDatasource;
+        let r = this.latestResponse();
+        return updatedDatasource?.rows ?? this.mapResponse(r);
     });
 
     public readonly matchups = computed((): MatchupText[] => {
         const result: MatchupText[] = [];
         const latestResponse = this.latestResponse();
-        if (!latestResponse) {
-            return [];
-        }
         for (const [courtIndex, matchupCollection] of Object.entries(latestResponse)) {
             result.push({
                 courtIndex,
@@ -165,7 +161,7 @@ export class MatchupTable {
         return rows;
     }
 
-    public drop(table: MatTable<PlayerRow>, movedName: string, currentIndex: number) {
+    public drop(table: MatTable<PlayerRow>, movedName: string, currentIndex: number, latestResponse: Response) {
         const dataSource = [...(table.dataSource as PlayerRow[])];
         const names = dataSource.map(r => r.name);
         const previousIndex = names.findIndex(n => n === movedName);
@@ -176,7 +172,10 @@ export class MatchupTable {
         if (this.selectedIndex() === previousIndex) {
             this.selectedIndex.set(currentIndex);
         }
-        this.updatedDatasource.set(dataSource);
+        this.updatedDatasource.set({
+            rows: dataSource,
+            latestResponse
+        });
     }
 
     public trackByName(index: number, item: PlayerRow): string {
@@ -190,6 +189,11 @@ export class MatchupTable {
     public isPartnerOfSelected(name: string) {
         return this.selectedRow()?.partners.includes(name);
     }
+}
+
+interface Update {
+    rows: PlayerRow[],
+    latestResponse: Response
 }
 
 interface PlayerRow {
