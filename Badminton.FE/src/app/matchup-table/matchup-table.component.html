@@ -2,7 +2,7 @@
     <div>
         <ul>
             <li>Populate Form above and hit Submit to repopulate table.</li>
-            <li>Drag and drop players using the left most cell. Indexes and matchups will get updated.</li>
+            <li>Drag and drop players using the left most cell. Indexes and pairings will get updated.</li>
             <li>Click on player to highlight/unhighlight them along with the partners they will play with.</li>
             <li>Even-numbered courts have a darker shade.</li>
         </ul>
@@ -37,11 +37,6 @@
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.name }}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="matchups">
-            <mat-header-cell *matHeaderCellDef>Matchups</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ element.matchups }}</mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

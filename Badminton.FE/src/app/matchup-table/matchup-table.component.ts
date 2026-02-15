@@ -53,8 +53,7 @@ export class MatchupTable {
         'position',
         'courtIndex',
         'playerIndex',
-        'name',
-        'matchups',
+        'name'
     ];
 
     private readonly localDatasource = signal<PlayerRow[]>([]);
@@ -72,24 +71,6 @@ export class MatchupTable {
                     [m.pairing1.player1, m.pairing1.player2, m.pairing2.player1, m.pairing2.player2].includes(name)
                 );
                 const pairIncludesPlayer = (p: Pairing) => [p.player1, p.player2].includes(name) ? 1 : 0
-                const getMatchupsTexts = (matchups: Matchup[]) => {
-                    const result: string[] = [];
-                    for (const m of matchups) {
-                        const pairs = [m.pairing1, m.pairing2].sort((p1, p2) => {
-                            return pairIncludesPlayer(p2) - pairIncludesPlayer(p1);
-                        })
-                        const getPairingText = (p: Pairing, includeFirst: boolean) => {
-                            const players = [p.player1, p.player2].sort((p1, p2) => {
-                                const isPlayer = (p: string) => p === name ? 1 : 0
-                                return isPlayer(p2) - isPlayer(p1);
-                            })
-                            return includeFirst ? `${players[0]}-${players[1]}` : players[1];
-                        }
-                        result.push(`${getPairingText(pairs[0], false)} v. ${getPairingText(pairs[1], true)}`)
-                    }
-                    return result.join('\n');
-                }
-
                 rows.push({
                     courtIndex,
                     playerIndex: (parseInt(index) + 1).toString(),
@@ -99,7 +80,6 @@ export class MatchupTable {
                         .filter(p => pairIncludesPlayer(p))
                         .flatMap(p => [p.player1, p.player2])
                         .filter(p => p !== name),
-                    matchups: getMatchupsTexts(playerMatchups)
                 })
             }
         }
@@ -139,5 +119,4 @@ interface PlayerRow {
     playerIndex: string
     name: string
     partners: string[]
-    matchups: string
 }
