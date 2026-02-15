@@ -29,8 +29,8 @@
         </form>
     </mat-tab>
     <mat-tab label="Results">
-        @if (responseResource.hasValue()) {
-            <matchup-table [formParams]="formParams" [responseResource]="responseResource"></matchup-table>
+        @if (responseResource.hasValue() && formParams(); as formParams) {
+            <matchup-table [formParams]="formParams" [inputResponse]="responseResource.value()"></matchup-table>
         } @else if (responseResource.error()) {
             Something went wrong. Is the form valid?
         } @else if (responseResource.isLoading()) {

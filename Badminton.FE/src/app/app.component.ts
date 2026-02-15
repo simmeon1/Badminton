@@ -12,18 +12,18 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 
 @Component({
     selector: 'app-root',
-    imports: [
-        MatFormField,
-        MatLabel,
-        CdkTextareaAutosize,
-        MatInput,
-        MatCheckbox,
-        MatButton,
-        FormField,
-        MatchupTable,
-        MatTabGroup,
-        MatTab
-    ],
+  imports: [
+    MatFormField,
+    MatLabel,
+    CdkTextareaAutosize,
+    MatInput,
+    MatCheckbox,
+    MatButton,
+    FormField,
+    MatchupTable,
+    MatTabGroup,
+    MatTab
+  ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
