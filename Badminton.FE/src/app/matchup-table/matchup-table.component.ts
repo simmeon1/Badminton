@@ -61,7 +61,7 @@ export class MatchupTable {
     public readonly selectedIndex = signal<number | undefined>(undefined);
     private readonly selectedRow = computed(() => {
         const selectedIndex = this.selectedIndex();
-        return selectedIndex === undefined ? undefined : this.playerRowsDatasource()[selectedIndex];
+        return selectedIndex === undefined ? undefined : this.dataSource()[selectedIndex];
     });
 
     public readonly displayedColumns: string[] = [
@@ -72,23 +72,23 @@ export class MatchupTable {
         'matchups',
     ];
 
-    private readonly updatedDatasource = signal<PlayerRow[] | undefined>(undefined);
-
-    public readonly latestResponse = computed(() => {
-        if (!this.updatedDatasource()) {
+    private readonly reorderedNames = signal<string[] | undefined>(undefined);
+    private readonly reorderedDatasource = signal<PlayerRow[]>(this.mapResponse(this.inputResponse()));
+    private readonly latestResponse = computed(() => {
+        if (!this.reorderedNames()) {
             return this.inputResponse();
         }
         return this.httpResourceRef.value();
     });
 
     public readonly httpResourceRef = httpResource<Response>(() => {
-        const updatedDatasource = this.updatedDatasource();
-        if (!updatedDatasource) {
+        const orderedNames = this.reorderedNames();
+        if (!orderedNames) {
             return undefined;
         }
         const params = new HttpParams({
             fromObject: {
-                names: updatedDatasource.map(r => r.name),
+                names: orderedNames,
                 minGames: this.formParams().minGames,
                 courtCount: this.formParams().courtCount
             }
@@ -96,13 +96,9 @@ export class MatchupTable {
         return `${environment.API_URL}/api/matchups?${params.toString()}`;
     });
 
-    public readonly playerRowsDatasource = computed((): PlayerRow[] => {
-        const updatedDatasource = this.updatedDatasource();
-        if (!updatedDatasource) {
-            return this.mapResponse(this.inputResponse());
-        }
+    public readonly dataSource = computed((): PlayerRow[] => {
         const latestResponse = this.latestResponse();
-        return latestResponse ? this.mapResponse(latestResponse) : updatedDatasource;
+        return latestResponse ? this.mapResponse(latestResponse) : this.reorderedDatasource();
     });
 
     public readonly matchups = computed((): MatchupText[] => {
@@ -176,7 +172,8 @@ export class MatchupTable {
         if (this.selectedIndex() === previousIndex) {
             this.selectedIndex.set(currentIndex);
         }
-        this.updatedDatasource.set(dataSource);
+        this.reorderedNames.set(names);
+        this.reorderedDatasource.set(dataSource);
     }
 
     public trackByName(index: number, item: PlayerRow): string {

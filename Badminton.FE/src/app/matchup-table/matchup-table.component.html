@@ -14,7 +14,7 @@
                     <li>Even-numbered courts have a darker shade.</li>
                 </ul>
             </div>
-            <mat-table #table [dataSource]="playerRowsDatasource()" cdkDropList
+            <mat-table #table [dataSource]="dataSource()" cdkDropList
                        (cdkDropListDropped)="drop(
                     table,
                     $event.item.data.name,
