@@ -16,7 +16,7 @@
             <h1>Court {{ courtMatchups.courtIndex }}</h1>
             @for (courtMatchup of courtMatchups.matchups; track courtMatchup) {
                 <div>
-                    <mat-checkbox>{{ courtMatchup }}</mat-checkbox>
+                    <mat-checkbox><span [class.selected-row]="isPlayerSelected(courtMatchup)">{{ courtMatchup }}</span></mat-checkbox>
                 </div>
             } @empty {
                 <div>Nothing to display. Did you submit the form?</div>

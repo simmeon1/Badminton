@@ -15,6 +15,7 @@ import {Pairing, Response} from '../app.component';
 export class MatchupsPrint {
     public readonly latestResponse = input.required<Response | undefined>();
     public readonly isLoading = input.required<boolean>();
+    public readonly selectedPlayer = input<string>();
     public readonly matchups = computed((): MatchupText[] => {
         const result: MatchupText[] = [];
         const latestResponse = this.latestResponse();
@@ -32,6 +33,11 @@ export class MatchupsPrint {
         }
         return result;
     });
+
+    public isPlayerSelected(courtMatchup: string) {
+        const player = this.selectedPlayer();
+        return player ? courtMatchup.match(`\\b${player}\\b`) : false;
+    }
 }
 
 interface MatchupText {

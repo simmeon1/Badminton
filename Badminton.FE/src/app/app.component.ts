@@ -75,6 +75,7 @@ Mike`,
         return `${environment.API_URL}/api/matchups?${params.toString()}`;
     });
     public readonly selectedTab = signal<number>(0);
+    public readonly selectedPlayer = signal<string | undefined>(undefined)
 
     private getFormParams(): FormParams {
         return {
@@ -100,6 +101,10 @@ Mike`,
             minGames: this.form.minGames().value(),
             courtCount: this.form.courtCount().value()
         });
+    }
+
+    public selectedPlayerChanged(name: string | undefined) {
+        this.selectedPlayer.set(name);
     }
 }
 

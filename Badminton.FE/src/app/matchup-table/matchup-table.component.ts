@@ -40,27 +40,33 @@ import {MatIcon} from "@angular/material/icon";
 })
 
 export class MatchupTable {
-    public readonly latestResponse = input<Response>();
-    public readonly isLoading = input.required<boolean>();
-    public readonly datasourceChanged = output<string[]>();
-    public readonly selectedIndex = signal<number | undefined>(undefined);
-    private readonly selectedRow = computed(() => {
-        const selectedIndex = this.selectedIndex();
-        return selectedIndex === undefined ? undefined : this.dataSource()[selectedIndex];
-    });
-
     public readonly displayedColumns: string[] = [
         'position',
         'courtIndex',
         'playerIndex',
         'name'
     ];
-
+    public readonly latestResponse = input<Response>();
+    public readonly isLoading = input.required<boolean>();
+    public readonly datasourceChanged = output<string[]>();
+    public readonly selectedPlayerChanged = output<string | undefined>();
+    public readonly selectedPlayer = input<string>();
     private readonly localDatasource = signal<PlayerRow[]>([]);
-
     public readonly dataSource = computed((): PlayerRow[] => {
         const latestResponse = this.latestResponse();
         return latestResponse ? this.mapResponse(latestResponse) : this.localDatasource();
+    });
+    public readonly selectedIndex = computed(() => {
+        const selectedPlayer = this.selectedPlayer();
+        if (!selectedPlayer) {
+            return undefined;
+        }
+        const index = this.dataSource().findIndex(n => n.name === selectedPlayer);
+        return index === -1 ? undefined : index
+    });
+    private readonly selectedRow = computed(() => {
+        const selectedIndex = this.selectedIndex();
+        return selectedIndex === undefined ? undefined : this.dataSource()[selectedIndex];
     });
 
     private mapResponse(r: Response): PlayerRow[] {
@@ -95,7 +101,7 @@ export class MatchupTable {
         }
         moveItemInArray(dataSource, previousIndex, currentIndex);
         if (this.selectedIndex() === previousIndex) {
-            this.selectedIndex.set(currentIndex);
+            this.selectedPlayerChanged.emit(movedName)
         }
         this.localDatasource.set(dataSource);
         this.datasourceChanged.emit(dataSource.map(r => r.name))
@@ -105,8 +111,8 @@ export class MatchupTable {
         return item.name;
     }
 
-    public selectIndex(index: number) {
-        this.selectedIndex.update((i) => i !== index ? index : undefined);
+    public selectIndex(name: string) {
+        this.selectedPlayerChanged.emit(this.selectedPlayer() === name ? undefined : name);
     }
 
     public isPartnerOfSelected(name: string) {

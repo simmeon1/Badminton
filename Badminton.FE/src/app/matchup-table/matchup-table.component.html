@@ -40,7 +40,7 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row (click)="selectIndex(i)"
+        <mat-row (click)="selectIndex(row.name)"
                  *matRowDef="let row; columns: displayedColumns; let i = index" cdkDrag [cdkDragData]="row"
                  [class.selected-row]="i === selectedIndex()"
                  [class.even-court]="row.courtIndex % 2 === 0"
