@@ -1,11 +1,27 @@
+// Interfaces and Types (Replacing Records)
+interface ILogger {
+    writeLine(str: string): void;
+}
+
+class DefaultLogger implements ILogger {
+    writeLine(str: string): void {}
+}
+
 export type Pairing = { player1: string; player2: string };
 export type Matchup = { pairing1: Pairing; pairing2: Pairing };
+
 export interface MatchupCollection {
     players: Map<number, string>;
     matchups: Matchup[];
 }
 
 export class MatchupBuilder {
+    private logger: ILogger;
+
+    constructor() {
+        this.logger = new DefaultLogger();
+    }
+
     public getMatchups(
         names: string[],
         minGames: number,
@@ -36,6 +52,8 @@ export class MatchupBuilder {
             let queue = [...nameChunk];
 
             while (true) {
+                this.logger.writeLine(`Player count is ${currentNames.length}`);
+
                 // Sorting logic (Mimicking .OrderBy().ThenBy())
                 const pick = [...queue].sort((a, b) => {
                     // 1. Prioritize players not in the last 4 spots
@@ -71,17 +89,21 @@ export class MatchupBuilder {
                     ...nameChunk.slice(nextIndex),
                     ...nameChunk.slice(0, nextIndex)
                 ];
+
+                this.logger.writeLine(`Picked ${pick}`);
                 currentNames.push(pick);
 
                 // Pairing and Matchup logic
                 if (currentNames.length > 0 && currentNames.length % 2 === 0) {
                     const lastTwo = currentNames.slice(-2);
                     const pairing = getPairing(lastTwo[0], lastTwo[1]);
+                    this.logger.writeLine(`Paired ${JSON.stringify(pairing)}`);
                     currentPairs.push(pairing);
 
                     if (currentPairs.length % 2 === 0) {
                         const lastTwoPairs = currentPairs.slice(-2);
                         const matchup = { pairing1: lastTwoPairs[0], pairing2: lastTwoPairs[1] };
+                        this.logger.writeLine(`Matched up ${JSON.stringify(matchup)}`);
                         currentMatchups.push(matchup);
                     }
                 }
@@ -104,6 +126,7 @@ export class MatchupBuilder {
                 matchups: currentMatchups,
             };
         }
+
         return resultMap;
     }
 }
