@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
@@ -71,14 +71,14 @@ export class App {
         ]
 
         this.form = form(signal<Form>({
-                names,
+                names: [],
                 namesText: names.join('\n'),
                 minGames: 4,
                 courtCount: 2,
                 shuffle: false,
                 submitText: true
             }), (schemaPath) => {
-                required(schemaPath.names);
+                required(schemaPath.namesText);
                 required(schemaPath.minGames);
                 min(schemaPath.minGames, 1);
                 max(schemaPath.minGames, 10);
@@ -90,10 +90,9 @@ export class App {
     }
 
     private getFormParams(): FormParams {
-
         const names = this.form.submitText().value() ?
             this.form.namesText().value().split('\n').map(n => n.trim()) :
-            this.form.names().value();
+            this.form.names().value().filter(n => n.checked).map(n => n.name);
         return {
             names,
             minGames: this.form.minGames().value(),
@@ -129,7 +128,7 @@ export class App {
             return;
         }
         const names = this.form.namesText().value().split('\n');
-        this.form.names().value.set(names);
+        this.form.names().value.set(names.map(n => ({ name: n, checked: true } as NameCheckbox)));
     }
 }
 
@@ -140,10 +139,15 @@ export interface FormParams {
 }
 
 interface Form {
-    names: string[];
+    names: NameCheckbox[];
     namesText: string;
     minGames: number;
     courtCount: number;
     shuffle: boolean;
     submitText: boolean;
+}
+
+interface NameCheckbox {
+    name: string
+    checked: boolean
 }
