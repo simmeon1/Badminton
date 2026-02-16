@@ -30,17 +30,7 @@ export class MatchupsPrint {
     public readonly latestResponse = input.required<Record<number, MatchupCollection> | undefined>();
     public readonly isLoading = input.required<boolean>();
     public readonly selectedPlayer = input<string>();
-    public readonly matchups = computed((): Record<string, Matchup[]> => {
-        const result: Record<string, Matchup[]> = {};
-        const latestResponse = this.latestResponse();
-        if (!latestResponse) {
-            return {};
-        }
-        for (const [courtIndex, matchupCollection] of Object.entries(latestResponse)) {
-            result[courtIndex] = matchupCollection.matchups;
-        }
-        return result;
-    });
+    public readonly matchups = computed((): Record<string, MatchupCollection> => this.latestResponse() || {});
 
     public matchupContainsPlayer(matchup: Matchup) {
         const searchElement = this.selectedPlayer();

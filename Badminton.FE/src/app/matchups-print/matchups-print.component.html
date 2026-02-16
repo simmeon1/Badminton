@@ -7,9 +7,7 @@
             </mat-expansion-panel-header>
             <ul>
                 <li>Matchups are produced by the ordering in the Players table.</li>
-                <li>Player selection in the Players table carries over here. The matchup text is sorted to include
-                    the player at the start for easy identification.
-                </li>
+                <li>Player selection in the Players table carries over here.</li>
                 <li>Checkboxes are only to help with tracking games.</li>
             </ul>
         </mat-expansion-panel>
@@ -23,8 +21,8 @@
             }
         } @else {
             @for (courtMatchups of matchups() | keyvalue; track courtMatchups.key) {
-                <h1>Court {{ courtMatchups.key }}</h1>
-                @for (matchup of courtMatchups.value; track serializeMatchup(matchup)) {
+                <h1>Court {{ courtMatchups.key }} ({{ (courtMatchups.value.players | keyvalue).length }} people) </h1>
+                @for (matchup of courtMatchups.value.matchups; track serializeMatchup(matchup)) {
                     <div>
                         <mat-checkbox></mat-checkbox>
                         <span [class.selected-row]="matchupContainsPlayer(matchup)">
