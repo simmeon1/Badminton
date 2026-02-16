@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, input, output, signal} from '@angular/core';
-import {Matchup, Pairing, Response} from "../app.component";
+import {MatchupCollection, Pairing} from "../matchup-builder.service";
 import {
     MatCell,
     MatCellDef,
@@ -57,7 +57,7 @@ export class MatchupTable {
         'playerIndex',
         'name'
     ];
-    public readonly latestResponse = input<Response>();
+    public readonly latestResponse = input<Record<number, MatchupCollection>>();
     public readonly isLoading = input.required<boolean>();
     public readonly datasourceChanged = output<string[]>();
     public readonly selectedPlayerChanged = output<string | undefined>();
@@ -82,7 +82,7 @@ export class MatchupTable {
         return undefined;
     });
 
-    private mapResponse(r: Response): PlayerRow[] {
+    private mapResponse(r: Record<number, MatchupCollection>): PlayerRow[] {
         const rows: PlayerRow[] = [];
         for (const [courtIndex, matchupCollection] of Object.entries(r)) {
             for (const [index, name] of Object.entries(matchupCollection.players)) {

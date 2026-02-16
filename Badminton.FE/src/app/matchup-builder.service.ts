@@ -1,4 +1,6 @@
 // Interfaces and Types (Replacing Records)
+import {Injectable} from '@angular/core';
+
 interface ILogger {
     writeLine(str: string): void;
 }
@@ -11,10 +13,11 @@ export type Pairing = { player1: string; player2: string };
 export type Matchup = { pairing1: Pairing; pairing2: Pairing };
 
 export interface MatchupCollection {
-    players: Map<number, string>;
+    players: Record<number, string>;
     matchups: Matchup[];
 }
 
+@Injectable({providedIn: 'root'})
 export class MatchupBuilder {
     private logger: ILogger;
 
@@ -118,8 +121,8 @@ export class MatchupBuilder {
             }
 
             // Populate Result
-            const playerMap = new Map<number, string>();
-            nameChunk.forEach((name, idx) => playerMap.set(idx, name));
+            const playerMap: Record<number, string> = {};
+            nameChunk.forEach((name, idx) => playerMap[idx] = name);
 
             resultMap[courtIndex++] = {
                 players: playerMap,

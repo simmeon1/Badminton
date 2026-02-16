@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {Pairing, Response} from '../app.component';
 import {
     MatAccordion,
     MatExpansionPanel, MatExpansionPanelDescription,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
+import {MatchupCollection, Pairing} from '../matchup-builder.service';
 
 @Component({
   selector: 'matchups-print',
@@ -24,7 +24,7 @@ import {
 })
 
 export class MatchupsPrint {
-    public readonly latestResponse = input.required<Response | undefined>();
+    public readonly latestResponse = input.required<Record<number, MatchupCollection> | undefined>();
     public readonly isLoading = input.required<boolean>();
     public readonly selectedPlayer = input<string>();
     public readonly matchups = computed((): MatchupText[] => {
