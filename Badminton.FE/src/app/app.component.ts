@@ -90,8 +90,12 @@ export class App {
     }
 
     private getFormParams(): FormParams {
+
+        const names = this.form.submitText().value() ?
+            this.form.namesText().value().split('\n').map(n => n.trim()) :
+            this.form.names().value();
         return {
-            names: this.form.names().value().map(n => n.trim()),
+            names,
             minGames: this.form.minGames().value(),
             courtCount: this.form.courtCount().value()
         }
