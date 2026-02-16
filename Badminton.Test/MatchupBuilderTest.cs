@@ -64,13 +64,6 @@ public class MatchupBuilderTest(ITestOutputHelper testOutputHelper)
         );
     }
 
-    private static Dictionary<int, IEnumerable<Matchup>> ExtractMatchups(
-        IReadOnlyDictionary<int, MatchupCollection> matchups
-    )
-    {
-        return matchups.ToDictionary(x => x.Key, x => x.Value.Matchups);
-    }
-
     [Fact]
     public void MatchupsAsExpectedWith5Players2Games1Courts()
     {
@@ -362,5 +355,12 @@ public class MatchupBuilderTest(ITestOutputHelper testOutputHelper)
             },
             ExtractMatchups(matchups)
         );
+    }
+
+    private static Dictionary<int, IEnumerable<Matchup>> ExtractMatchups(
+        IReadOnlyDictionary<int, MatchupCollection> matchups
+    )
+    {
+        return matchups.ToDictionary(x => x.Key, x => x.Value.Matchups);
     }
 }

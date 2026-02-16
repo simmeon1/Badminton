@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MatchupBuilder {
-  public getMatchups(): Record<number, MatchupCollection> {
+  public getMatchups(names: string[], minGames: number, courtCount: number): Record<number, MatchupCollection> {
       return {};
   }
 }
