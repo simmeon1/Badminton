@@ -36,7 +36,7 @@
                     <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
                 </div>
                 <button matButton="filled" type="submit" [disabled]="form().invalid() || responseResource.isLoading()">Submit</button>
-                <button matButton type="button" (click)="form.namesText().value.set('')">Clear names</button>
+                <button matButton type="button" (click)="form.submitText().value.set(true); form.namesText().value.set('')">Clear names</button>
             </div>
         </form>
     </mat-tab>
