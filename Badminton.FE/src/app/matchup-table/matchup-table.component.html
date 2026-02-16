@@ -1,4 +1,4 @@
-<ng-container>
+<div class="container">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -17,10 +17,10 @@
     </mat-accordion>
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
-                    table,
-                    $event.item.data.name,
-                    $event.currentIndex
-               )"
+                        table,
+                        $event.item.data.name,
+                        $event.currentIndex
+                   )"
                cdkDropListData="dataSource"
                [trackBy]="trackByName"
                [class.is-loading]="isLoading()"
@@ -47,7 +47,7 @@
             <mat-cell *matCellDef="let element"> {{ element.name }}</mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row (click)="selectIndex(row.name)"
                  *matRowDef="let row; columns: displayedColumns; let i = index" cdkDrag [cdkDragData]="row"
                  [class.selected-row]="row === selectedRow()?.row"
@@ -63,4 +63,4 @@
             }
         </div>
     </mat-table>
-</ng-container>
+</div>

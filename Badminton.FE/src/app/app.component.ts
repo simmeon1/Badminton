@@ -93,6 +93,7 @@ Mike`,
         }
         this.formParams.set(p);
         this.selectedTab.set(1);
+        this.selectedPlayer.set(undefined);
     }
 
     public datasourceChanged(names: string[]) {
