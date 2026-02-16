@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
-import {form, FormField, max, min, required} from "@angular/forms/signals";
+import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
@@ -9,8 +9,9 @@ import {MatchupTable} from "./matchup-table/matchup-table.component";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {MatchupsPrint} from './matchups-print/matchups-print.component';
 import {rxResource} from '@angular/core/rxjs-interop';
-import {Observable, of} from 'rxjs';
+import {of} from 'rxjs';
 import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
+import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +26,9 @@ import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
         MatchupTable,
         MatTabGroup,
         MatTab,
-        MatchupsPrint
+        MatchupsPrint,
+        MatRadioGroup,
+        MatRadioButton
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
@@ -33,33 +36,7 @@ import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
 })
 
 export class App {
-    public readonly form = form(signal<Form>({
-            names: `Alfa
-Bravo
-Charlie
-Delta
-Echo
-Foxtrot
-Golf
-Hotel
-India
-Juliett
-Kilo
-Lima
-Mike`,
-            minGames: 4,
-            courtCount: 2,
-            shuffle: false
-        }), (schemaPath) => {
-            required(schemaPath.names);
-            required(schemaPath.minGames);
-            min(schemaPath.minGames, 1);
-            max(schemaPath.minGames, 10);
-            required(schemaPath.courtCount);
-            min(schemaPath.courtCount, 1);
-            max(schemaPath.courtCount, 10);
-        }
-    );
+    public readonly form: FieldTree<Form>;
     public readonly formParams = signal<FormParams | undefined>(undefined);
     private readonly matchupBuilder = inject(MatchupBuilder);
 
@@ -74,11 +51,47 @@ Mike`,
     });
 
     public readonly selectedTab = signal<number>(0);
-    public readonly selectedPlayer = signal<string | undefined>(undefined)
+    public readonly selectedPlayer = signal<string | undefined>(undefined);
+
+    public constructor() {
+        const names = [
+            'Alfa',
+            'Bravo',
+            'Charlie',
+            'Delta',
+            'Echo',
+            'Foxtrot',
+            'Golf',
+            'Hotel',
+            'India',
+            'Juliett',
+            'Kilo',
+            'Lima',
+            'Mike',
+        ]
+
+        this.form = form(signal<Form>({
+                names,
+                namesText: names.join('\n'),
+                minGames: 4,
+                courtCount: 2,
+                shuffle: false,
+                submitText: true
+            }), (schemaPath) => {
+                required(schemaPath.names);
+                required(schemaPath.minGames);
+                min(schemaPath.minGames, 1);
+                max(schemaPath.minGames, 10);
+                required(schemaPath.courtCount);
+                min(schemaPath.courtCount, 1);
+                max(schemaPath.courtCount, 10);
+            }
+        )
+    }
 
     private getFormParams(): FormParams {
         return {
-            names: this.form.names().value().split('\n').map(n => n.trim()),
+            names: this.form.names().value().map(n => n.trim()),
             minGames: this.form.minGames().value(),
             courtCount: this.form.courtCount().value()
         }
@@ -106,6 +119,14 @@ Mike`,
     public selectedPlayerChanged(name: string | undefined) {
         this.selectedPlayer.set(name);
     }
+
+    public radioChanged(submitText: boolean) {
+        if (submitText) {
+            return;
+        }
+        const names = this.form.namesText().value().split('\n');
+        this.form.names().value.set(names);
+    }
 }
 
 export interface FormParams {
@@ -115,8 +136,10 @@ export interface FormParams {
 }
 
 interface Form {
-    names: string;
+    names: string[];
+    namesText: string;
     minGames: number;
     courtCount: number;
     shuffle: boolean;
+    submitText: boolean;
 }
