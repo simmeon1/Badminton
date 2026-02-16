@@ -60,19 +60,17 @@ Mike`,
             max(schemaPath.courtCount, 10);
         }
     );
-    public readonly formParams = signal<FormParams>(this.getFormParams());
+    public readonly formParams = signal<FormParams | undefined>(undefined);
     private readonly matchupBuilder = inject(MatchupBuilder);
 
-    public readonly responseResource = rxResource<Record<number, MatchupCollection>, FormParams>({
+    public readonly responseResource = rxResource<Record<number, MatchupCollection>, FormParams | undefined>({
         params: () => this.formParams(),
-        stream: (p) => {
-            let observable: Observable<Record<number, MatchupCollection>> = of(this.matchupBuilder.getMatchups(
+        stream: (p) =>
+            of(this.matchupBuilder.getMatchups(
                 p.params.names,
                 p.params.minGames,
                 p.params.courtCount
-            ));
-            return observable;
-        },
+            )),
     });
 
     public readonly selectedTab = signal<number>(0);
