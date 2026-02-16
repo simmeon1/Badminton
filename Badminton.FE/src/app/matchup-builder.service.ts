@@ -9,6 +9,6 @@ export class MatchupBuilder {
   }
 }
 
-interface Pairing { player1: string, player2: string }
-interface Matchup { pairing1: Pairing, pairing2: Pairing }
-interface MatchupCollection { players: Record<number, string>, matchups: Matchup[] }
+export interface Pairing { player1: string, player2: string }
+export interface Matchup { pairing1: Pairing, pairing2: Pairing }
+export interface MatchupCollection { players: Record<number, string>, matchups: Matchup[] }

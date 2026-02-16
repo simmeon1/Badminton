@@ -1,4 +1,4 @@
-import {MatchupBuilder} from './matchup-service.service';
+import {Matchup, MatchupBuilder, MatchupCollection} from './matchup-builder.service';
 
 describe('MatchupBuilder', () => {
     const names =
@@ -37,13 +37,18 @@ describe('MatchupBuilder', () => {
         service = new MatchupBuilder();
     });
 
-    it('should be created', () => {
-        expect(matchups).toEqual({});
-    });
+    function extractMatchups(matchups: Record<number, MatchupCollection>): Record<number, Matchup[]> {
+        const result: Record<number, Matchup[]> = {};
+        for (const [a, b] of Object.entries(matchups)) {
+            // @ts-ignore
+            result[a] = b.matchups;
+        }
+        return result;
+    }
 
     it('MatchupsAsExpectedWith5Players1Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 5), 1, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 5), 1, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -57,8 +62,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith5Players2Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 5), 2, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 5), 2, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -73,8 +78,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith5Players3Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 5), 3, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 5), 3, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -90,8 +95,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith5Players5Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 5), 5, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 5), 5, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -110,8 +115,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith14Players4Games2Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 14), 4, 2);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 14), 4, 2);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -142,8 +147,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith5Players4Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 5), 4, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 5), 4, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -160,8 +165,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith6Players4Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 6), 4, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 6), 4, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -179,8 +184,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith7Players4Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 7), 4, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 7), 4, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -199,8 +204,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith4Players1Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 4), 1, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 4), 1, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -213,8 +218,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith4Players2Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 4), 2, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 4), 2, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -228,8 +233,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith4Players3Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 4), 3, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 4), 3, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -244,8 +249,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith4Players4Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 4), 4, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 4), 4, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -261,8 +266,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith4Players5Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 4), 5, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 4), 5, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
@@ -279,8 +284,8 @@ describe('MatchupBuilder', () => {
     }
 
     it('MatchupsAsExpectedWith4Players6Games1Courts', () => {
-        var matchups = service.GetMatchups(names.slice(0, 4), 6, 1);
-        expect(matchups).toEqual(
+        var matchups = service.getMatchups(names.slice(0, 4), 6, 1);
+        expect(extractMatchups(matchups)).toEqual(
             {
                 1:
                     [
