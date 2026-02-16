@@ -34,10 +34,9 @@ describe('MatchupBuilder', () => {
     let service: MatchupBuilder;
 
     beforeEach(() => {
-        service = new MatchupBuilder();
-    });
+        service = { pairing1: { player1: }    }); player2:
 
-    function extractMatchups(matchups: Record<number, MatchupCollection>): Record<number, Matchup[]> {
+     }  pairing2: { player1: matchups: Record< player2:number, MatchupCollection }}: Record<number, Matchup[]> {
         const result: Record<number, Matchup[]> = {};
         for (const [a, b] of Object.entries(matchups)) {
             // @ts-ignore
@@ -52,8 +51,8 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Echo"), new Pairing("Bravo", "Charlie"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Echo" }, pairing2: { player1: "Bravo", player2: "Charlie" }}
                     ]
             }
         },
@@ -67,9 +66,9 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Echo"), new Pairing("Bravo", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Echo"), new Pairing("Alfa", "Charlie"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Echo" }, pairing2: { player1: "Bravo", player2: "Charlie" }},
+        { pairing1: { player1: "Delta", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Charlie" }}
                     ]
             }
         },
@@ -83,10 +82,10 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Echo"), new Pairing("Bravo", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Echo"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Charlie", "Echo"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Echo" }, pairing2: { player1: "Bravo", player2: "Charlie" }},
+        { pairing1: { player1: "Delta", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+            { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Charlie", player2: "Echo" }}
                     ]
             }
         },
@@ -100,13 +99,13 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Echo"), new Pairing("Bravo", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Echo"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Alfa", "Delta"), new Pairing("Bravo", "Echo")),
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Echo")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Charlie", "Echo")),
-                        new Matchup(new Pairing("Delta", "Echo"), new Pairing("Alfa", "Charlie"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Echo" }, pairing2: { player1: "Bravo", player2: "Charlie" }},
+        { pairing1: { player1: "Delta", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+            { pairing1: { player1: "Alfa", player2: "Delta" }, pairing2: { player1: "Bravo", player2: "Echo" }},
+                { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Echo" }},
+                    { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Charlie", player2: "Echo" }},
+                        { pairing1: { player1: "Delta", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Charlie" }}
                     ]
             }
         },
@@ -120,25 +119,25 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Echo", "Foxtrot"), new Pairing("Alfa", "Golf")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Delta", "Echo")),
-                        new Matchup(new Pairing("Foxtrot", "Golf"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Foxtrot"), new Pairing("Bravo", "Golf")),
-                        new Matchup(new Pairing("Charlie", "Echo"), new Pairing("Alfa", "Foxtrot")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Echo", "Golf"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Echo", player2: "Foxtrot" }, pairing2: { player1: "Alfa", player2: "Golf" }},
+        { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Delta", player2: "Echo" }},
+            { pairing1: { player1: "Foxtrot", player2: "Golf" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+                { pairing1: { player1: "Delta", player2: "Foxtrot" }, pairing2: { player1: "Bravo", player2: "Golf" }},
+                    { pairing1: { player1: "Charlie", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Foxtrot" }},
+                        { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Echo", player2: "Golf" }}
                     ]
             },
             {
                 2,
                     [
-                        new Matchup(new Pairing("Hotel", "India"), new Pairing("Juliett", "Kilo")),
-                        new Matchup(new Pairing("Lima", "Mike"), new Pairing("Hotel", "November")),
-                        new Matchup(new Pairing("India", "Juliett"), new Pairing("Kilo", "Lima")),
-                        new Matchup(new Pairing("Mike", "November"), new Pairing("Hotel", "Juliett")),
-                        new Matchup(new Pairing("Kilo", "Mike"), new Pairing("India", "November")),
-                        new Matchup(new Pairing("Juliett", "Lima"), new Pairing("Hotel", "Mike")),
-                        new Matchup(new Pairing("India", "Kilo"), new Pairing("Lima", "November"))
+                        { pairing1: { player1: "Hotel", player2: "India" }, pairing2: { player1: "Juliett", player2: "Kilo" }},
+                { pairing1: { player1: "Lima", player2: "Mike" }, pairing2: { player1: "Hotel", player2: "November" }},
+                    { pairing1: { player1: "India", player2: "Juliett" }, pairing2: { player1: "Kilo", player2: "Lima" }},
+                        { pairing1: { player1: "Mike", player2: "November" }, pairing2: { player1: "Hotel", player2: "Juliett" }},
+                            { pairing1: { player1: "Kilo", player2: "Mike" }, pairing2: { player1: "India", player2: "November" }},
+                                { pairing1: { player1: "Juliett", player2: "Lima" }, pairing2: { player1: "Hotel", player2: "Mike" }},
+                                    { pairing1: { player1: "India", player2: "Kilo" }, pairing2: { player1: "Lima", player2: "November" }}
                     ]
             }
         },
@@ -152,11 +151,11 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Echo"), new Pairing("Bravo", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Echo"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Alfa", "Delta"), new Pairing("Bravo", "Echo")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Charlie", "Echo"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Echo" }, pairing2: { player1: "Bravo", player2: "Charlie" }},
+        { pairing1: { player1: "Delta", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+            { pairing1: { player1: "Alfa", player2: "Delta" }, pairing2: { player1: "Bravo", player2: "Echo" }},
+                { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Charlie", player2: "Echo" }}
                     ]
             }
         },
@@ -170,12 +169,12 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Echo", "Foxtrot"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Echo"), new Pairing("Alfa", "Foxtrot")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Delta", "Foxtrot")),
-                        new Matchup(new Pairing("Alfa", "Delta"), new Pairing("Bravo", "Echo")),
-                        new Matchup(new Pairing("Charlie", "Echo"), new Pairing("Bravo", "Foxtrot"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Echo", player2: "Foxtrot" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+        { pairing1: { player1: "Delta", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Foxtrot" }},
+            { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Delta", player2: "Foxtrot" }},
+                { pairing1: { player1: "Alfa", player2: "Delta" }, pairing2: { player1: "Bravo", player2: "Echo" }},
+                    { pairing1: { player1: "Charlie", player2: "Echo" }, pairing2: { player1: "Bravo", player2: "Foxtrot" }}
                     ]
             }
         },
@@ -189,13 +188,13 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Echo", "Foxtrot"), new Pairing("Alfa", "Golf")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Delta", "Echo")),
-                        new Matchup(new Pairing("Foxtrot", "Golf"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Delta", "Foxtrot"), new Pairing("Bravo", "Golf")),
-                        new Matchup(new Pairing("Charlie", "Echo"), new Pairing("Alfa", "Foxtrot")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Echo", "Golf"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Echo", player2: "Foxtrot" }, pairing2: { player1: "Alfa", player2: "Golf" }},
+        { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Delta", player2: "Echo" }},
+            { pairing1: { player1: "Foxtrot", player2: "Golf" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+                { pairing1: { player1: "Delta", player2: "Foxtrot" }, pairing2: { player1: "Bravo", player2: "Golf" }},
+                    { pairing1: { player1: "Charlie", player2: "Echo" }, pairing2: { player1: "Alfa", player2: "Foxtrot" }},
+                        { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Echo", player2: "Golf" }}
                     ]
             }
         },
@@ -209,7 +208,7 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }}
                     ]
             }
         },
@@ -223,8 +222,8 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Charlie"), new Pairing("Bravo", "Delta"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Charlie" }, pairing2: { player1: "Bravo", player2: "Delta" }}
                     ]
             }
         },
@@ -238,9 +237,9 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Charlie"), new Pairing("Bravo", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Charlie" }, pairing2: { player1: "Bravo", player2: "Delta" }},
+        { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }}
                     ]
             }
         },
@@ -254,10 +253,10 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Charlie"), new Pairing("Bravo", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Charlie" }, pairing2: { player1: "Bravo", player2: "Delta" }},
+        { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }},
+            { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }}
                     ]
             }
         },
@@ -271,11 +270,11 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Charlie"), new Pairing("Bravo", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Alfa", "Charlie"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Charlie" }, pairing2: { player1: "Bravo", player2: "Delta" }},
+        { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }},
+            { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }},
+                { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Alfa", player2: "Charlie" }}
                     ]
             }
         },
@@ -289,12 +288,12 @@ describe('MatchupBuilder', () => {
             {
                 1:
                     [
-                        new Matchup(new Pairing("Alfa", "Bravo"), new Pairing("Charlie", "Delta")),
-                        new Matchup(new Pairing("Alfa", "Charlie"), new Pairing("Bravo", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Charlie"), new Pairing("Alfa", "Delta")),
-                        new Matchup(new Pairing("Bravo", "Delta"), new Pairing("Alfa", "Charlie")),
-                        new Matchup(new Pairing("Charlie", "Delta"), new Pairing("Alfa", "Bravo"))
+                        { pairing1: { player1: "Alfa", player2: "Bravo" }, pairing2: { player1: "Charlie", player2: "Delta" }},
+            { pairing1: { player1: "Alfa", player2: "Charlie" }, pairing2: { player1: "Bravo", player2: "Delta" }},
+        { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }},
+            { pairing1: { player1: "Bravo", player2: "Charlie" }, pairing2: { player1: "Alfa", player2: "Delta" }},
+                { pairing1: { player1: "Bravo", player2: "Delta" }, pairing2: { player1: "Alfa", player2: "Charlie" }},
+                    { pairing1: { player1: "Charlie", player2: "Delta" }, pairing2: { player1: "Alfa", player2: "Bravo" }}
                     ]
             }
         },
