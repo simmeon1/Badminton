@@ -15,20 +15,23 @@
         </mat-expansion-panel>
     </mat-accordion>
     <div class="matchups-container">
-        @if (matchups().length === 0) {
+        @if ((matchups | json) === '{}') {
             @if (isLoading()) {
                 Loading...
             } @else {
                 Nothing to display. Did you submit the form?
             }
         } @else {
-            @for (courtMatchups of matchups(); track courtMatchups.courtIndex) {
-                <h1>Court {{ courtMatchups.courtIndex }}</h1>
-                @for (courtMatchup of courtMatchups.matchups; track courtMatchup) {
+            @for (courtMatchups of matchups() | keyvalue; track courtMatchups.key) {
+                <h1>Court {{ courtMatchups.key }}</h1>
+                @for (matchup of courtMatchups.value; track serializeMatchup(matchup)) {
                     <div>
-                        <mat-checkbox><span
-                                [class.selected-row]="isPlayerSelected(courtMatchup)">{{ courtMatchup }}</span>
-                        </mat-checkbox>
+                        <mat-checkbox></mat-checkbox>
+                        <span [class.selected-row]="matchupContainsPlayer(matchup)">
+                            <span [class.selected-player]="matchup.pairing1.player1 === selectedPlayer()">{{ matchup.pairing1.player1 }}</span>-<span [class.selected-player]="matchup.pairing1.player2 === selectedPlayer()">{{ matchup.pairing1.player2 }}</span>
+                            v.
+                            <span [class.selected-player]="matchup.pairing2.player1 === selectedPlayer()">{{ matchup.pairing2.player1 }}</span>-<span [class.selected-player]="matchup.pairing2.player2 === selectedPlayer()">{{ matchup.pairing2.player2 }}</span>
+                        </span>
                     </div>
                 } @empty {
                     <div>Nothing to display. Did you submit the form?</div>
