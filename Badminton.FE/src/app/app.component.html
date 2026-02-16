@@ -4,7 +4,7 @@
             <div class="form-wrapper">
                 <mat-radio-group [formField]="form.submitText" (change)="radioChanged($event.value)">
                     <mat-radio-button [value]="true">Text</mat-radio-button>
-                    <mat-radio-button [value]="false">Checkboxes</mat-radio-button>
+                    <mat-radio-button [value]="false" [disabled]="form.namesText().invalid()">Checkboxes</mat-radio-button>
                 </mat-radio-group>
                 @if (form.submitText().value()) {
                     <div>
@@ -18,8 +18,6 @@
                         <div>
                             <mat-checkbox [formField]="this.form.names[i].checked">{{ nameCheckbox.name }}</mat-checkbox>
                         </div>
-                    } @empty {
-                        Provide names in text view.
                     }
                 }
                 <div>
