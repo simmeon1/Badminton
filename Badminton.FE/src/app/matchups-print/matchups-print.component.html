@@ -1,4 +1,4 @@
-<ng-container>
+<div class="container">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -14,26 +14,28 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-    @if (matchups().length === 0) {
-        @if (isLoading()) {
-            Loading...
+    <div class="matchups-container">
+        @if (matchups().length === 0) {
+            @if (isLoading()) {
+                Loading...
+            } @else {
+                Nothing to display. Did you submit the form?
+            }
         } @else {
-            Nothing to display. Did you submit the form?
-        }
-    } @else {
-        @for (courtMatchups of matchups(); track courtMatchups.courtIndex) {
-            <h1>Court {{ courtMatchups.courtIndex }}</h1>
-            @for (courtMatchup of courtMatchups.matchups; track courtMatchup) {
-                <div>
-                    <mat-checkbox><span
-                            [class.selected-row]="isPlayerSelected(courtMatchup)">{{ courtMatchup }}</span>
-                    </mat-checkbox>
-                </div>
+            @for (courtMatchups of matchups(); track courtMatchups.courtIndex) {
+                <h1>Court {{ courtMatchups.courtIndex }}</h1>
+                @for (courtMatchup of courtMatchups.matchups; track courtMatchup) {
+                    <div>
+                        <mat-checkbox><span
+                                [class.selected-row]="isPlayerSelected(courtMatchup)">{{ courtMatchup }}</span>
+                        </mat-checkbox>
+                    </div>
+                } @empty {
+                    <div>Nothing to display. Did you submit the form?</div>
+                }
             } @empty {
                 <div>Nothing to display. Did you submit the form?</div>
             }
-        } @empty {
-            <div>Nothing to display. Did you submit the form?</div>
         }
-    }
-</ng-container>
+    </div>
+</div>
