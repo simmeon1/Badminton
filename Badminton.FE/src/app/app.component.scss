@@ -1,3 +1,13 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  overflow: auto;
+}
+
 .mat-mdc-tab-group {
   padding: 0 8px;
   height: 100%;
