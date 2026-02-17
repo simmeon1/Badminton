@@ -24,7 +24,7 @@
                         <div>
                             <mat-form-field>
                                 <mat-label>Add players, one per line</mat-label>
-                                <textarea matInput cdkTextareaAutosize [cdkAutosizeMinRows]="16" [formField]="form.namesText"></textarea>
+                                <textarea matInput cdkTextareaAutosize [formField]="form.namesText"></textarea>
                             </mat-form-field>
                         </div>
                     } @else {
@@ -63,7 +63,6 @@
                        (syncWithForm)="updateInput($event)"
                        (selectedPlayerChanged)="selectedPlayerChanged($event)"
         >
-
         </players>
     </mat-tab>
     <mat-tab label="Matches">
