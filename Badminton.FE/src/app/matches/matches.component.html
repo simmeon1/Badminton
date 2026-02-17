@@ -13,7 +13,7 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-
+    <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                         table,
@@ -44,6 +44,7 @@
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
             <mat-cell *matCellDef="let element">
+                <!--This won't work as player is a name where as the matchup is made of indexes-->
                 <match [matchup]="element.matchupShort" [selectedPlayer]="selectedPlayer()"></match>
             </mat-cell>
         </ng-container>
@@ -55,9 +56,9 @@
             </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns(); sticky: true"></mat-header-row>
         <mat-row
-                 *matRowDef="let row; columns: displayedColumns; let i = index" cdkDrag [cdkDragData]="row"
+                 *matRowDef="let row; columns: displayedColumns(); let i = index" cdkDrag [cdkDragData]="row"
                  [class.selected-row]="selectedIndexes().includes(i)"
                  [class.even-court]="row.courtIndex % 2 === 0"
         >

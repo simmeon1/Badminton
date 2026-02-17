@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component, computed, input, linkedSignal, signal} from '@angular/core';
 import {
     MatAccordion,
-    MatExpansionPanel, MatExpansionPanelDescription,
+    MatExpansionPanel,
+    MatExpansionPanelDescription,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
@@ -12,12 +13,17 @@ import {
     MatCell,
     MatCellDef,
     MatColumnDef,
-    MatHeaderCell, MatHeaderCellDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
     MatHeaderRow,
-    MatHeaderRowDef, MatNoDataRow,
-    MatRow, MatRowDef, MatTable
+    MatHeaderRowDef,
+    MatNoDataRow,
+    MatRow,
+    MatRowDef,
+    MatTable
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'matches',
@@ -42,7 +48,8 @@ import {MatIcon} from '@angular/material/icon';
         MatRowDef,
         MatTable,
         MatNoDataRow,
-        MatHeaderCellDef
+        MatHeaderCellDef,
+        MatCheckbox
     ],
   templateUrl: './matches.component.html',
   styleUrl: './matches.component.scss',
@@ -50,14 +57,6 @@ import {MatIcon} from '@angular/material/icon';
 })
 
 export class Matches {
-    public readonly displayedColumns: string[] = [
-        'position',
-        'courtIndex',
-        'matchupIndex',
-        'id',
-        'matchup'
-    ];
-
     public readonly latestResponse = input.required<Record<number, MatchupCollection> | undefined>();
     public readonly isLoading = input.required<boolean>();
     public readonly selectedPlayer = input<string>();
@@ -69,6 +68,10 @@ export class Matches {
         return this.mapResponse(latestResponse);
     });
     public readonly showIndexesCheckbox = signal(false);
+    public readonly displayedColumns = computed(() =>
+        ['position', 'courtIndex', 'matchupIndex']
+            .concat(this.showIndexesCheckbox() ? ['id'] : [])
+            .concat(['matchup']));
     public readonly selectedIndexes = computed(() => {
         const result: number[] = [];
         const selectedPlayer = this.selectedPlayer();
