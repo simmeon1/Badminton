@@ -23,6 +23,7 @@ import {
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
 import {SelectedIndexAndRow} from './selected-index-and-row';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'players',
@@ -46,7 +47,8 @@ import {SelectedIndexAndRow} from './selected-index-and-row';
         MatExpansionPanel,
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
-        MatExpansionPanelTitle
+        MatExpansionPanelTitle,
+        MatButton
     ],
     templateUrl: './players.component.html',
     styleUrl: './players.component.scss',
@@ -60,10 +62,11 @@ export class Players {
         'playerIndex',
         'name'
     ];
-    public readonly latestResponse = input<Record<number, MatchupCollection>>();
-    public readonly isLoading = input.required<boolean>();
     public readonly datasourceChanged = output<string[]>();
     public readonly selectedPlayerChanged = output<string | undefined>();
+    public readonly syncWithForm = output<string[]>();
+    public readonly latestResponse = input<Record<number, MatchupCollection>>();
+    public readonly isLoading = input.required<boolean>();
     public readonly selectedPlayer = input<string>();
     private readonly localDatasource = signal<PlayerRow[]>([]);
     public readonly dataSource = computed((): PlayerRow[] => {
@@ -129,6 +132,10 @@ export class Players {
 
     public selectIndex(name: string) {
         this.selectedPlayerChanged.emit(this.selectedPlayer() === name ? undefined : name);
+    }
+
+    public syncWithFormClicked() {
+        this.syncWithForm.emit(this.dataSource().map(row => row.name));
     }
 
     public isPartnerOfSelected(name: string) {
