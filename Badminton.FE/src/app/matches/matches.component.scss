@@ -1,0 +1,14 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-row {
+  background-color: lightblue;
+}
+
+.matchups-container {
+  overflow: auto;
+  flex: 1 1 auto
+}

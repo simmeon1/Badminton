@@ -5,9 +5,9 @@ import {FieldTree, form, FormField, max, min, required} from "@angular/forms/sig
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
-import {MatchupTable} from "./matchup-table/matchup-table.component";
+import {Players} from "./players/players.component";
+import {Matches} from './matches/matches.component';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {MatchupsPrint} from './matchups-print/matchups-print.component';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {of} from 'rxjs';
 import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
@@ -23,10 +23,10 @@ import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
         MatCheckbox,
         MatButton,
         FormField,
-        MatchupTable,
+        Players,
         MatTabGroup,
         MatTab,
-        MatchupsPrint,
+        Matches,
         MatRadioGroup,
         MatRadioButton
     ],

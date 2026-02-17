@@ -1,0 +1,45 @@
+<div class="container">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Instructions</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>Matchups are produced by the ordering in the Players table.</li>
+                <li>Player selection in the Players table carries over here.</li>
+                <li>Checking the Show Indexes checkbox will show the indexes similar to the printed sheet.</li>
+                <li>Match up checkboxes are only to help with tracking games.</li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="matchups-container">
+        @if ((matchups | json) === '{}') {
+            @if (isLoading()) {
+                Loading...
+            } @else {
+                Nothing to display. Did you submit the form?
+            }
+        } @else {
+            <mat-checkbox [checked]="showIndexesCheckbox()" (change)="showIndexesCheckbox.set($event.checked)">Show indexes</mat-checkbox>
+            @for (courtMatchups of matchups() | keyvalue; track courtMatchups.key) {
+                <h1>Court {{ courtMatchups.key }} ({{ (courtMatchups.value.players | keyvalue).length }} people) </h1>
+                @for (matchup of courtMatchups.value.matchups; track serializeMatchup(matchup)) {
+                    <div>
+                        <mat-checkbox></mat-checkbox>
+                        <span [class.selected-row]="matchupContainsPlayer(matchup)">
+                            @if (showIndexesCheckbox()) {
+                                (<match [selectedPlayer]="selectedPlayer()" [matchup]="getIndexedMatchup(matchup, courtMatchups.value.players)"></match>)
+                            }
+                            <match [selectedPlayer]="selectedPlayer()" [matchup]="matchup"></match>
+                        </span>
+                    </div>
+                } @empty {
+                    <div>Nothing to display. Did you submit the form?</div>
+                }
+            } @empty {
+                <div>Nothing to display. Did you submit the form?</div>
+            }
+        }
+    </div>
+</div>

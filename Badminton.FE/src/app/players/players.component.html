@@ -1,0 +1,66 @@
+<div class="container">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Instructions</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+                <ul>
+                    <li>Populate Form above and hit Submit to repopulate table.</li>
+                    <li>Drag and drop players using the left most cell. Indexes and pairings will get updated.</li>
+                    <li>Click on player to highlight/unhighlight them along with the partners they will play with.</li>
+                    <li>Even-numbered courts have a darker shade.</li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-table #table [dataSource]="dataSource()" cdkDropList
+               (cdkDropListDropped)="drop(
+                        table,
+                        $event.item.data.name,
+                        $event.currentIndex
+                   )"
+               cdkDropListData="dataSource"
+               [trackBy]="trackByName"
+               [class.is-loading]="isLoading()"
+    >
+        <ng-container matColumnDef="position" sticky>
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell class="handle" cdkDragHandle *matCellDef="let element">
+                <mat-icon>reorder</mat-icon>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="courtIndex">
+            <mat-header-cell *matHeaderCellDef>Court</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.courtIndex }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="playerIndex">
+            <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.playerIndex }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.name }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row (click)="selectIndex(row.name)"
+                 *matRowDef="let row; columns: displayedColumns; let i = index" cdkDrag [cdkDragData]="row"
+                 [class.selected-row]="row === selectedRow()?.row"
+                 [class.even-court]="row.courtIndex % 2 === 0"
+                 [class.partner-of-selected]="isPartnerOfSelected(row.name)"
+        >
+        </mat-row>
+        <div *matNoDataRow>
+            @if (isLoading()) {
+                Loading...
+            } @else {
+                Nothing to display. Did you submit the form?
+            }
+        </div>
+    </mat-table>
+</div>

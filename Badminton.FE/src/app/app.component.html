@@ -41,20 +41,20 @@
         </form>
     </mat-tab>
     <mat-tab label="Players">
-        <matchup-table [latestResponse]="responseResource.value()"
+        <players [latestResponse]="responseResource.value()"
                        [isLoading]="responseResource.isLoading()"
                        [selectedPlayer]="selectedPlayer()"
                        (datasourceChanged)="datasourceChanged($event)"
                        (selectedPlayerChanged)="selectedPlayerChanged($event)"
         >
 
-        </matchup-table>
+        </players>
     </mat-tab>
     <mat-tab label="Matches">
-        <matchups-print
+        <matches
                 [latestResponse]="responseResource.value()"
                 [isLoading]="responseResource.isLoading()"
                 [selectedPlayer]="selectedPlayer()"
-        ></matchups-print>
+        ></matches>
     </mat-tab>
 </mat-tab-group>
