@@ -102,7 +102,7 @@ export class Matches {
             const players = matchupCollection.players;
             const getPlayerIndex = (n: string) => {
                 const index = Object.entries(players).find(([index, name]) => name === n)![0];
-                return parseInt(index) + 1;
+                return (parseInt(index) + 1).toString();
             }
             const getString = (p1: string, p2: string, p3: string, p4: string) =>
                 `${p1}-${p2} v. ${p3}-${p4}`
@@ -113,13 +113,11 @@ export class Matches {
                     courtIndex: parseInt(courtIndex),
                     matchupIndex: i + 1,
                     matchup: m,
+                    matchupShort: {
+                        pairing1: {player1: getPlayerIndex(m.pairing1.player1), player2: getPlayerIndex(m.pairing1.player2)},
+                        pairing2: {player1: getPlayerIndex(m.pairing2.player1), player2: getPlayerIndex(m.pairing2.player2)}
+                    },
                     matchupText: getString(m.pairing1.player1, m.pairing1.player2, m.pairing2.player1,m.pairing2.player2),
-                    matchupTextShort: getString(
-                        getPlayerIndex(m.pairing1.player1).toString(),
-                        getPlayerIndex(m.pairing1.player2).toString(),
-                        getPlayerIndex(m.pairing2.player1).toString(),
-                        getPlayerIndex(m.pairing2.player2).toString()
-                    )
                 })
             }
         }
@@ -135,6 +133,6 @@ interface MatchupRow {
     courtIndex: number
     matchupIndex: number
     matchup: Matchup
+    matchupShort: Matchup
     matchupText: string
-    matchupTextShort: string
 }

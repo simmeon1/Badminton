@@ -44,7 +44,7 @@
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                {{ element.matchupTextShort }}
+                <match [matchup]="element.matchupShort" [selectedPlayer]="selectedPlayer()"></match>
             </mat-cell>
         </ng-container>
 
