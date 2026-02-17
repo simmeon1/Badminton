@@ -76,9 +76,9 @@ export class MatchupBuilder {
                     if (currentNames.length % 2 !== 0) {
                         const lastPlayer = currentNames[currentNames.length - 1];
                         const aPairCount = currentPairs.filter(p =>
-                            JSON.stringify(getSortedPairing(p.player1, p.player2)) === JSON.stringify(getSortedPairing(lastPlayer, a))).length;
+                            JSON.stringify(p) === JSON.stringify(getSortedPairing(lastPlayer, a))).length;
                         const bPairCount = currentPairs.filter(p =>
-                            JSON.stringify(getSortedPairing(p.player1, p.player2)) === JSON.stringify(getSortedPairing(lastPlayer, b))).length;
+                            JSON.stringify(p) === JSON.stringify(getSortedPairing(lastPlayer, b))).length;
                         return aPairCount - bPairCount;
                     }
 
@@ -99,7 +99,8 @@ export class MatchupBuilder {
                 // Pairing and Matchup logic
                 if (currentNames.length > 0 && currentNames.length % 2 === 0) {
                     const lastTwo = currentNames.slice(-2);
-                    const pairing: Pairing = { player1: lastTwo[0], player2: lastTwo[1] }
+                    // This messes up the prints in Matches a bit i.e. might not match the printed sheet.
+                    const pairing: Pairing = getSortedPairing(lastTwo[0], lastTwo[1]);
                     this.logger.writeLine(`Paired ${JSON.stringify(pairing)}`);
                     currentPairs.push(pairing);
 
