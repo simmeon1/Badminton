@@ -28,7 +28,9 @@
         <ng-container matColumnDef="position" sticky>
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell class="handle" cdkDragHandle *matCellDef="let element">
-                <mat-icon>reorder</mat-icon>
+                <button matIconButton>
+                    <mat-icon>reorder</mat-icon>
+                </button>
             </mat-cell>
         </ng-container>
 

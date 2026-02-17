@@ -23,7 +23,7 @@ import {
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
 import {SelectedIndexAndRow} from './selected-index-and-row';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 
 @Component({
     selector: 'players',
@@ -48,7 +48,8 @@ import {MatButton} from '@angular/material/button';
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,
-        MatButton
+        MatButton,
+        MatIconButton
     ],
     templateUrl: './players.component.html',
     styleUrl: './players.component.scss',
