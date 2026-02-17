@@ -147,7 +147,7 @@ export class App {
     public updateInput(names: string[]) {
         this.selectedTab.set(0);
         this.form.submitText().value.set(true);
-        setTimeout(() => this.form.namesText().value.set(names.join('\n')), 100);
+        setTimeout(() => this.form.namesText().value.set(names.join('\n')), 50);
     }
 }
 
