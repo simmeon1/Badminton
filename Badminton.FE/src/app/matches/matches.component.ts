@@ -69,20 +69,20 @@ export class Matches {
         return this.mapResponse(latestResponse);
     });
     public readonly showIndexesCheckbox = signal(false);
-    public readonly selectedRow = computed(() => {
+    public readonly selectedIndexes = computed(() => {
+        const result: number[] = [];
         const selectedPlayer = this.selectedPlayer();
         if (selectedPlayer === undefined) {
-            return undefined;
+            return result;
         }
         for (let i = 0; i < this.dataSource().length; i++){
             const row = this.dataSource()[i];
             const m = row.matchup;
             if ([m.pairing1.player1, m.pairing1.player2, m.pairing2.player1, m.pairing2.player2].includes(selectedPlayer)) {
-                const result: SelectedIndexAndRow<MatchupRow> = {index: i, row}
-                return result;
+                result.push(i);
             }
         }
-        return undefined;
+        return result;
     });
 
 
