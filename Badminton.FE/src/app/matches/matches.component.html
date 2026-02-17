@@ -13,33 +13,54 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-    <div class="matchups-container">
-        @if ((matchups | json) === '{}') {
+
+    <mat-table #table [dataSource]="dataSource()" cdkDropList
+               (cdkDropListDropped)="drop(
+                        table,
+                        $event.item.data.name,
+                        $event.currentIndex
+                   )"
+               cdkDropListData="dataSource"
+               [trackBy]="trackByText"
+               [class.is-loading]="isLoading()"
+    >
+        <ng-container matColumnDef="position" sticky>
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell class="handle" cdkDragHandle *matCellDef="let element">
+                <mat-icon>reorder</mat-icon>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="courtIndex">
+            <mat-header-cell *matHeaderCellDef>Court</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.courtIndex }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="matchupIndex">
+            <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.matchupIndex }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="matchup">
+            <mat-header-cell *matHeaderCellDef>Matchup</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <match [matchup]="element.matchup" [selectedPlayer]="selectedPlayer()"></match>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row
+                 *matRowDef="let row; columns: displayedColumns; let i = index" cdkDrag [cdkDragData]="row"
+                 [class.selected-row]="row === selectedRow()?.row"
+                 [class.even-court]="row.courtIndex % 2 === 0"
+        >
+        </mat-row>
+        <div *matNoDataRow>
             @if (isLoading()) {
                 Loading...
             } @else {
                 Nothing to display. Did you submit the form?
             }
-        } @else {
-            <mat-checkbox [checked]="showIndexesCheckbox()" (change)="showIndexesCheckbox.set($event.checked)">Show indexes</mat-checkbox>
-            @for (courtMatchups of matchups() | keyvalue; track courtMatchups.key) {
-                <h1>Court {{ courtMatchups.key }} ({{ (courtMatchups.value.players | keyvalue).length }} people) </h1>
-                @for (matchup of courtMatchups.value.matchups; track serializeMatchup(matchup)) {
-                    <div>
-                        <mat-checkbox></mat-checkbox>
-                        <span [class.selected-row]="matchupContainsPlayer(matchup)">
-                            @if (showIndexesCheckbox()) {
-                                (<match [selectedPlayer]="selectedPlayer()" [matchup]="getIndexedMatchup(matchup, courtMatchups.value.players)"></match>)
-                            }
-                            <match [selectedPlayer]="selectedPlayer()" [matchup]="matchup"></match>
-                        </span>
-                    </div>
-                } @empty {
-                    <div>Nothing to display. Did you submit the form?</div>
-                }
-            } @empty {
-                <div>Nothing to display. Did you submit the form?</div>
-            }
-        }
-    </div>
+        </div>
+    </mat-table>
 </div>

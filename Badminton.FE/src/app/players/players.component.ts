@@ -7,7 +7,8 @@ import {
     MatHeaderCell,
     MatHeaderCellDef,
     MatHeaderRow,
-    MatHeaderRowDef, MatNoDataRow,
+    MatHeaderRowDef,
+    MatNoDataRow,
     MatRow,
     MatRowDef,
     MatTable
@@ -18,8 +19,10 @@ import {
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelDescription,
-    MatExpansionPanelHeader, MatExpansionPanelTitle
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
 } from '@angular/material/expansion';
+import {SelectedIndexAndRow} from './selected-index-and-row';
 
 @Component({
     selector: 'players',
@@ -75,7 +78,7 @@ export class Players {
         for (let i = 0; i < this.dataSource().length; i++){
             const row = this.dataSource()[i];
             if (row.name === selectedPlayer) {
-                const result: SelectedIndexAndRow = {index: i, row}
+                const result: SelectedIndexAndRow<PlayerRow> = {index: i, row}
                 return result;
             }
         }
@@ -140,7 +143,3 @@ interface PlayerRow {
     partners: string[]
 }
 
-interface SelectedIndexAndRow {
-    index: number
-    row: PlayerRow
-}
