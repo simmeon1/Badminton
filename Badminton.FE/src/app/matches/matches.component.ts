@@ -71,7 +71,7 @@ export class Matches {
     });
     public readonly showIndexesCheckbox = signal(false);
     public readonly displayedColumns = computed(() =>
-        ['position', 'courtIndex', 'matchupIndex']
+        ['position', 'courtIndex', 'rowIndex', 'matchupIndex']
             .concat(this.showIndexesCheckbox() ? ['id'] : [])
             .concat(['matchup']));
     public readonly selectedIndexes = computed(() => {

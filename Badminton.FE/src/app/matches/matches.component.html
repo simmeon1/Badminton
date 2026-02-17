@@ -39,13 +39,18 @@
             <mat-cell *matCellDef="let element"> {{ element.courtIndex }}</mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="matchupIndex">
+        <ng-container matColumnDef="rowIndex">
             <mat-header-cell *matHeaderCellDef>№</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ dataSource().indexOf(element) + 1 }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="matchupIndex">
+            <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.matchupIndex }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Matchup</mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <!--This won't work as player is a name where as the matchup is made of indexes-->
                 <match [matchup]="element.matchupShort" [selectedPlayer]="selectedPlayer()"></match>
