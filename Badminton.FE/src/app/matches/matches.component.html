@@ -17,7 +17,7 @@
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                         table,
-                        $event.item.data.name,
+                        $event.item.data.matchupText,
                         $event.currentIndex
                    )"
                cdkDropListData="dataSource"

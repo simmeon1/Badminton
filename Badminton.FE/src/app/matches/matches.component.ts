@@ -141,7 +141,7 @@ export class Matches {
                     courtIndex: parseInt(courtIndex),
                     matchupIndex: i + 1,
                     matchup,
-                    matchupText: JSON.stringify(matchup)
+                    matchupText: `${matchup.pairing1.player1}-${matchup.pairing1.player2} v. ${matchup.pairing2.player1}-${matchup.pairing2.player2}`
                 })
             }
         }
