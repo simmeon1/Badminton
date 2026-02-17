@@ -139,7 +139,7 @@ export class Matches {
                 const matchup = matchupCollection.matchups[i];
                 rows.push({
                     courtIndex: parseInt(courtIndex),
-                    matchupIndex: i,
+                    matchupIndex: i + 1,
                     matchup,
                     matchupText: JSON.stringify(matchup)
                 })
