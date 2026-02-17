@@ -41,6 +41,13 @@
             <mat-cell *matCellDef="let element"> {{ element.matchupIndex }}</mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{ element.matchupTextShort }}
+            </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="matchup">
             <mat-header-cell *matHeaderCellDef>Matchup</mat-header-cell>
             <mat-cell *matCellDef="let element">

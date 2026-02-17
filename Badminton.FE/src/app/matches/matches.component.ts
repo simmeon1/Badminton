@@ -54,6 +54,7 @@ export class Matches {
         'position',
         'courtIndex',
         'matchupIndex',
+        'id',
         'matchup'
     ];
 
@@ -98,13 +99,27 @@ export class Matches {
     private mapResponse(r: Record<number, MatchupCollection>): MatchupRow[] {
         const rows: MatchupRow[] = [];
         for (const [courtIndex, matchupCollection] of Object.entries(r)) {
+            const players = matchupCollection.players;
+            const getPlayerIndex = (n: string) => {
+                const index = Object.entries(players).find(([index, name]) => name === n)![0];
+                return parseInt(index) + 1;
+            }
+            const getString = (p1: string, p2: string, p3: string, p4: string) =>
+                `${p1}-${p2} v. ${p3}-${p4}`
+
             for (let i = 0; i < matchupCollection.matchups.length; i++){
-                const matchup = matchupCollection.matchups[i];
+                const m = matchupCollection.matchups[i];
                 rows.push({
                     courtIndex: parseInt(courtIndex),
                     matchupIndex: i + 1,
-                    matchup,
-                    matchupText: `${matchup.pairing1.player1}-${matchup.pairing1.player2} v. ${matchup.pairing2.player1}-${matchup.pairing2.player2}`
+                    matchup: m,
+                    matchupText: getString(m.pairing1.player1, m.pairing1.player2, m.pairing2.player1,m.pairing2.player2),
+                    matchupTextShort: getString(
+                        getPlayerIndex(m.pairing1.player1).toString(),
+                        getPlayerIndex(m.pairing1.player2).toString(),
+                        getPlayerIndex(m.pairing2.player1).toString(),
+                        getPlayerIndex(m.pairing2.player2).toString()
+                    )
                 })
             }
         }
@@ -121,4 +136,5 @@ interface MatchupRow {
     matchupIndex: number
     matchup: Matchup
     matchupText: string
+    matchupTextShort: string
 }
