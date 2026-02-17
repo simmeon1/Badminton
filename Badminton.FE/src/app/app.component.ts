@@ -12,6 +12,12 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {of} from 'rxjs';
 import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
+import {
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelDescription,
+    MatExpansionPanelHeader, MatExpansionPanelTitle
+} from '@angular/material/expansion';
 
 @Component({
     selector: 'app-root',
@@ -28,7 +34,12 @@ import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
         MatTab,
         Matches,
         MatRadioGroup,
-        MatRadioButton
+        MatRadioButton,
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelDescription,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

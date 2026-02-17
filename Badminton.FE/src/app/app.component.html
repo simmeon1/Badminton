@@ -1,5 +1,18 @@
 <mat-tab-group [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
     <mat-tab label="Form">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Instructions</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <ul>
+                    <li>Populate the Form and hit Submit to populate Players and Matches tab.</li>
+                    <li>Switch to checkboxes to easily enable/disable players based on the text field.</li>
+                    <li>Checking Shuffle names will produce a shuffled Players tab.</li>
+                </ul>
+            </mat-expansion-panel>
+        </mat-accordion>
         <form novalidate (submit)="onSubmit($event)">
             <div class="form-wrapper">
                 <mat-radio-group [formField]="form.submitText" (change)="radioChanged($event.value)">
