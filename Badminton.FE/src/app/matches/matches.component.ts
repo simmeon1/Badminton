@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, computed, input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input, linkedSignal, signal} from '@angular/core';
 import {
     MatAccordion,
     MatExpansionPanel, MatExpansionPanelDescription,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {Matchup, MatchupCollection, Pairing} from '../matchup-builder.service';
+import {Matchup, MatchupCollection} from '../matchup-builder.service';
 import {Match} from '../match/match.component';
 import {CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import {
@@ -18,7 +18,6 @@ import {
     MatRow, MatRowDef, MatTable
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
-import {SelectedIndexAndRow} from '../players/selected-index-and-row';
 
 @Component({
   selector: 'matches',
@@ -61,7 +60,7 @@ export class Matches {
     public readonly latestResponse = input.required<Record<number, MatchupCollection> | undefined>();
     public readonly isLoading = input.required<boolean>();
     public readonly selectedPlayer = input<string>();
-    public readonly dataSource = computed((): MatchupRow[] => {
+    public readonly dataSource = linkedSignal((): MatchupRow[] => {
         const latestResponse = this.latestResponse();
         if (!latestResponse) {
             return [];
@@ -85,51 +84,15 @@ export class Matches {
         return result;
     });
 
-
-    public matchupContainsPlayer(matchup: Matchup) {
-        const searchElement = this.selectedPlayer();
-        if (!searchElement) {
-            return false;
-        }
-        const pairIncludesPlayer = (p: Pairing) => [p.player1, p.player2].includes(searchElement) ? 1 : 0
-        return pairIncludesPlayer(matchup.pairing1) || pairIncludesPlayer(matchup.pairing2);
-    }
-
-    public serializeMatchup(matchup: Matchup) {
-        return JSON.stringify(matchup);
-    }
-
-    public getIndexedMatchup(matchup: Matchup, players: Record<number, string>): Matchup {
-        const reverseMap: Record<string, string> = {};
-        for (const [index, player] of Object.entries(players)) {
-            reverseMap[player] = (parseInt(index) + 1).toString();
-        }
-
-        const p1 = reverseMap[matchup.pairing1.player1];
-        const p2 = reverseMap[matchup.pairing1.player2];
-        const p3 = reverseMap[matchup.pairing2.player1];
-        const p4 = reverseMap[matchup.pairing2.player2];
-        return {
-            pairing1: {
-                player1: p1,
-                player2: p2,
-            },
-            pairing2: {
-                player1: p3,
-                player2: p4,
-            }
-        }
-    }
-
     public drop(table: MatTable<MatchupRow>, movedMatchupText: string, currentIndex: number) {
-        const dataSource = table.dataSource as MatchupRow[];
+        const dataSource = [...(table.dataSource as MatchupRow[])];
         const matchupTexts = dataSource.map(r => r.matchupText);
         const previousIndex = matchupTexts.findIndex(n => n === movedMatchupText);
         if (previousIndex === currentIndex) {
             return;
         }
         moveItemInArray(dataSource, previousIndex, currentIndex);
-        table.renderRows();
+        this.dataSource.set(dataSource);
     }
 
     private mapResponse(r: Record<number, MatchupCollection>): MatchupRow[] {
