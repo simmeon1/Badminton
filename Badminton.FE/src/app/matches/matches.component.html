@@ -28,9 +28,7 @@
         <ng-container matColumnDef="position" sticky>
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell class="handle" cdkDragHandle *matCellDef="let element">
-                <button matIconButton>
-                    <mat-icon>reorder</mat-icon>
-                </button>
+                <mat-icon>reorder</mat-icon>
             </mat-cell>
         </ng-container>
 
@@ -58,7 +56,7 @@
         </ng-container>
 
         <ng-container matColumnDef="matchup">
-            <mat-header-cell *matHeaderCellDef>Matchup</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Full Matchup</mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <match [matchup]="element.matchup" [selectedPlayer]="selectedPlayer()"></match>
             </mat-cell>
