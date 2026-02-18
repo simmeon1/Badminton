@@ -1,6 +1,6 @@
-import {afterNextRender, ChangeDetectionStrategy, Component, inject, Injector, signal, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {CdkTextareaAutosize, TextFieldModule} from "@angular/cdk/text-field";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
@@ -25,7 +25,6 @@ import {
         MatFormField,
         MatLabel,
         CdkTextareaAutosize,
-        TextFieldModule,
         MatInput,
         MatCheckbox,
         MatButton,
@@ -64,7 +63,6 @@ export class App {
 
     public readonly selectedTab = signal<number>(0);
     public readonly selectedPlayer = signal<string | undefined>(undefined);
-    private _injector = inject(Injector);
 
     public constructor() {
         const names = [
@@ -142,12 +140,6 @@ export class App {
         }
         const names = this.form.namesText().value().split('\n');
         this.form.names().value.set(names.map(n => ({ name: n, checked: true } as NameCheckbox)));
-    }
-
-    public updateInput(names: string[]) {
-        this.selectedTab.set(0);
-        this.form.submitText().value.set(true);
-        setTimeout(() => this.form.namesText().value.set(names.join('\n')), 50);
     }
 }
 

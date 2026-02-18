@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, output, signal} from '@angular/core';
 import {MatchupCollection, Pairing} from "../matchup-builder.service";
 import {
     MatCell,
@@ -23,7 +23,8 @@ import {
     MatExpansionPanelTitle
 } from '@angular/material/expansion';
 import {SelectedIndexAndRow} from './selected-index-and-row';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'players',
@@ -48,8 +49,7 @@ import {MatButton, MatIconButton} from '@angular/material/button';
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,
-        MatButton,
-        MatIconButton
+        MatButton
     ],
     templateUrl: './players.component.html',
     styleUrl: './players.component.scss',
@@ -63,11 +63,10 @@ export class Players {
         'playerIndex',
         'name'
     ];
-    public readonly datasourceChanged = output<string[]>();
-    public readonly selectedPlayerChanged = output<string | undefined>();
-    public readonly syncWithForm = output<string[]>();
     public readonly latestResponse = input<Record<number, MatchupCollection>>();
     public readonly isLoading = input.required<boolean>();
+    public readonly datasourceChanged = output<string[]>();
+    public readonly selectedPlayerChanged = output<string | undefined>();
     public readonly selectedPlayer = input<string>();
     private readonly localDatasource = signal<PlayerRow[]>([]);
     public readonly dataSource = computed((): PlayerRow[] => {
@@ -88,6 +87,7 @@ export class Players {
         }
         return undefined;
     });
+    private readonly snackBar = inject(MatSnackBar);
 
     private mapResponse(r: Record<number, MatchupCollection>): PlayerRow[] {
         const rows: PlayerRow[] = [];
@@ -135,8 +135,9 @@ export class Players {
         this.selectedPlayerChanged.emit(this.selectedPlayer() === name ? undefined : name);
     }
 
-    public syncWithFormClicked() {
-        this.syncWithForm.emit(this.dataSource().map(row => row.name));
+    public copyToClipboard() {
+        navigator.clipboard.writeText(this.dataSource().map(row => row.name).join('\n'));
+        this.snackBar.open('Copied', undefined, {duration: 500});
     }
 
     public isPartnerOfSelected(name: string) {
