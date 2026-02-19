@@ -16,6 +16,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <button matButton type="button" class="syncButton" (click)="copyToClipboard()">Copy to clipboard</button>
+    <button matButton type="button" class="syncButton" (click)="syncToForm()">Sync to Form</button>
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                         table,

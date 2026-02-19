@@ -66,6 +66,7 @@ export class Players {
     public readonly latestResponse = input<Record<number, MatchupCollection>>();
     public readonly isLoading = input.required<boolean>();
     public readonly datasourceChanged = output<string[]>();
+    public readonly playersReordered = output<string[]>();
     public readonly selectedPlayerChanged = output<string | undefined>();
     public readonly selectedPlayer = input<string>();
     private readonly localDatasource = signal<PlayerRow[]>([]);
@@ -138,6 +139,12 @@ export class Players {
     public copyToClipboard() {
         navigator.clipboard.writeText(this.dataSource().map(row => row.name).join('\n'));
         this.snackBar.open('Copied', undefined, {duration: 500});
+    }
+
+    public syncToForm() {
+        const names = this.dataSource().map(row => row.name);
+        this.playersReordered.emit(names);
+        this.snackBar.open('Synced to Form', undefined, {duration: 500});
     }
 
     public isPartnerOfSelected(name: string) {

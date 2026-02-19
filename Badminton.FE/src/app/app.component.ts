@@ -146,6 +146,22 @@ export class App {
         this.selectedPlayer.set(name);
     }
 
+    public playersReordered(orderedNames: string[]) {
+        // Create a map of names to their checkbox state
+        const currentNames = this.form.names().value();
+        const nameStateMap = new Map(currentNames.map(n => [n.name, n.checked]));
+
+        // Reorder checkboxes to match the table order, preserving their checked state
+        const reorderedCheckboxes = orderedNames
+            .filter(name => nameStateMap.has(name))
+            .map(name => ({
+                name,
+                checked: nameStateMap.get(name) ?? false
+            } as NameCheckbox));
+
+        this.form.names().value.set(reorderedCheckboxes);
+    }
+
     public openAddDialog(): void {
         const dialogRef = this.dialog.open(AddNamesDialog, {
             data: { namesText: '' }
@@ -220,7 +236,7 @@ interface NameCheckbox {
 })
 export class AddNamesDialog {
     readonly dialogRef = inject(MatDialogRef<AddNamesDialog>);
-    readonly data = inject<{ namesText: string }>(MAT_DIALOG_DATA);
+    readonly data = inject<AddNamesDialogData>(MAT_DIALOG_DATA);
     namesText = this.data.namesText;
 
     onCancel(): void {
