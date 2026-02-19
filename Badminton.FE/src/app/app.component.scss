@@ -47,3 +47,19 @@ form {
   overflow: auto;
   margin-bottom: 16px;
 }
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+
+  mat-checkbox {
+    flex: 1;
+  }
+
+  button {
+    flex-shrink: 0;
+  }
+}
+
