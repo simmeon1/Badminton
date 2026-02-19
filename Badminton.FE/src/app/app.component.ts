@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
@@ -11,7 +10,19 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {rxResource} from '@angular/core/rxjs-interop';
 import {of} from 'rxjs';
 import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
-import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
+import {
+    MAT_DIALOG_DATA,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogRef,
+    MatDialog,
+    MatDialogTitle
+} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {
     MatAccordion,
     MatExpansionPanel,
@@ -24,7 +35,6 @@ import {
     imports: [
         MatFormField,
         MatLabel,
-        CdkTextareaAutosize,
         MatInput,
         MatCheckbox,
         MatButton,
@@ -33,8 +43,6 @@ import {
         MatTabGroup,
         MatTab,
         Matches,
-        MatRadioGroup,
-        MatRadioButton,
         MatAccordion,
         MatExpansionPanel,
         MatExpansionPanelDescription,
@@ -50,6 +58,7 @@ export class App {
     public readonly form: FieldTree<Form>;
     public readonly formParams = signal<FormParams | undefined>(undefined);
     private readonly matchupBuilder = inject(MatchupBuilder);
+    private readonly dialog = inject(MatDialog);
 
     public readonly responseResource = rxResource<Record<number, MatchupCollection>, FormParams | undefined>({
         params: () => this.formParams(),
@@ -81,15 +90,14 @@ export class App {
             'Mike',
         ]
 
+        const nameCheckboxes = names.map(n => ({ name: n, checked: true } as NameCheckbox));
+
         this.form = form(signal<Form>({
-                names: [],
-                namesText: names.join('\n'),
+                names: nameCheckboxes,
                 minGames: 4,
                 courtCount: 2,
                 shuffle: false,
-                submitText: true
             }), (schemaPath) => {
-                required(schemaPath.namesText);
                 required(schemaPath.minGames);
                 min(schemaPath.minGames, 1);
                 max(schemaPath.minGames, 10);
@@ -101,9 +109,9 @@ export class App {
     }
 
     private getFormParams(): FormParams {
-        const names = this.form.submitText().value() ?
-            this.form.namesText().value().split('\n').map(n => n.trim()) :
-            this.form.names().value().filter(n => n.checked).map(n => n.name);
+        const names = this.form.names().value()
+            .filter(n => n.checked)
+            .map(n => n.name);
         return {
             names,
             minGames: this.form.minGames().value(),
@@ -134,12 +142,26 @@ export class App {
         this.selectedPlayer.set(name);
     }
 
-    public radioChanged(submitText: boolean) {
-        if (submitText) {
-            return;
-        }
-        const names = this.form.namesText().value().split('\n');
-        this.form.names().value.set(names.map(n => ({ name: n, checked: true } as NameCheckbox)));
+    public openAddDialog(): void {
+        const dialogRef = this.dialog.open(AddNamesDialog, {
+            data: { namesText: '' }
+        });
+
+        dialogRef.afterClosed().subscribe((namesText: string | undefined) => {
+            if (namesText && namesText.trim()) {
+                const newNames = namesText.split('\n')
+                    .map(n => n.trim())
+                    .filter(n => n.length > 0);
+
+                const currentNames = this.form.names().value();
+                const existingNameSet = new Set(currentNames.map(n => n.name));
+
+                const uniqueNewNames = newNames.filter(n => !existingNameSet.has(n));
+                const nameCheckboxes = uniqueNewNames.map(n => ({ name: n, checked: true } as NameCheckbox));
+
+                this.form.names().value.set([...currentNames, ...nameCheckboxes]);
+            }
+        });
     }
 }
 
@@ -151,14 +173,54 @@ export interface FormParams {
 
 interface Form {
     names: NameCheckbox[];
-    namesText: string;
     minGames: number;
     courtCount: number;
     shuffle: boolean;
-    submitText: boolean;
 }
 
 interface NameCheckbox {
     name: string
     checked: boolean
 }
+
+@Component({
+    selector: 'add-names-dialog',
+    template: `
+        <h2 mat-dialog-title>Add Players</h2>
+        <mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Add players, one per line</mat-label>
+                <textarea matInput cdkTextareaAutosize [(ngModel)]="namesText"></textarea>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button matButton (click)="onCancel()">Cancel</button>
+            <button matButton [mat-dialog-close]="namesText" cdkFocusInitial>Ok</button>
+        </mat-dialog-actions>
+    `,
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButton,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose,
+        CdkTextareaAutosize,
+    ]
+})
+export class AddNamesDialog {
+    readonly dialogRef = inject(MatDialogRef<AddNamesDialog>);
+    readonly data = inject<{ namesText: string }>(MAT_DIALOG_DATA);
+    namesText = this.data.namesText;
+
+    onCancel(): void {
+        this.dialogRef.close();
+    }
+}
+
+interface AddNamesDialogData {
+    namesText: string;
+}
+

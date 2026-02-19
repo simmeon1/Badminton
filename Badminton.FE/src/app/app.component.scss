@@ -28,3 +28,17 @@ form {
 .form-wrapper {
   padding: 12px;
 }
+
+.checkboxes-container {
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+
+  > div {
+    margin: 8px 0;
+  }
+}
+
