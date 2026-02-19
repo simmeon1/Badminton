@@ -163,6 +163,10 @@ export class App {
             }
         });
     }
+
+    public clearAllPlayers(): void {
+        this.form.names().value.set([]);
+    }
 }
 
 export interface FormParams {
