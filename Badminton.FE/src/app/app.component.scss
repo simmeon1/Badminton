@@ -11,7 +11,7 @@ form {
 }
 
 .form-wrapper {
-  padding: 12px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
@@ -36,7 +36,6 @@ form {
 
 .button-group {
   display: flex;
-  margin-bottom: 12px;
 }
 
 .checkboxes-container {
@@ -48,4 +47,3 @@ form {
   overflow: auto;
   margin-bottom: 16px;
 }
-

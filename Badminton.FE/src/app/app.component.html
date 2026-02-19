@@ -45,7 +45,7 @@
                     <div>
                         <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
                     </div>
-                    <button matButton="filled" type="submit" [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit</button>
+                    <button matButton="filled" type="submit" class="submit" [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit</button>
                 </div>
             </form>
         </div>
