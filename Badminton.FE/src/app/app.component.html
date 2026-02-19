@@ -23,11 +23,8 @@
                     </div>
                     <div class="checkboxes-container">
                         @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
-                            <div class="checkbox-row">
+                            <div>
                                 <mat-checkbox [formField]="this.form.names[i].checked">{{ nameCheckbox.name }}</mat-checkbox>
-                                <button mat-icon-button type="button" (click)="removePlayer(i)" title="Delete player">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
                             </div>
                         } @empty {
                             Use the Add button to add players.

@@ -2,8 +2,7 @@ import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@ang
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {MatButton, MatIconButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
+import {MatButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
 import {Players} from "./players/players.component";
 import {Matches} from './matches/matches.component';
@@ -39,7 +38,6 @@ import {
         MatInput,
         MatCheckbox,
         MatButton,
-        MatIcon,
         FormField,
         Players,
         MatTabGroup,
@@ -49,8 +47,7 @@ import {
         MatExpansionPanel,
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
-        MatExpansionPanelTitle,
-        MatIconButton
+        MatExpansionPanelTitle
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
@@ -190,12 +187,6 @@ export class App {
 
     public clearAllPlayers(): void {
         this.form.names().value.set([]);
-    }
-
-    public removePlayer(index: number): void {
-        const currentNames = this.form.names().value();
-        const updatedNames = currentNames.filter((_, i) => i !== index);
-        this.form.names().value.set(updatedNames);
     }
 }
 
