@@ -136,11 +136,6 @@ export class Players {
         this.selectedPlayerChanged.emit(this.selectedPlayer() === name ? undefined : name);
     }
 
-    public copyToClipboard() {
-        navigator.clipboard.writeText(this.dataSource().map(row => row.name).join('\n'));
-        this.snackBar.open('Copied', undefined, {duration: 500});
-    }
-
     public syncToForm() {
         const names = this.dataSource().map(row => row.name);
         this.playersReordered.emit(names);
