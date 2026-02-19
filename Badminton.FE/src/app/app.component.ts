@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
@@ -107,6 +107,10 @@ export class App {
             }
         )
     }
+
+    public readonly hasCheckedPlayers = computed(() => {
+        return this.form.names().value().some(n => n.checked);
+    });
 
     private getFormParams(): FormParams {
         const names = this.form.names().value()
