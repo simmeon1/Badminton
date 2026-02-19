@@ -160,6 +160,7 @@ export class App {
             } as NameCheckbox));
 
         this.form.names().value.set(reorderedCheckboxes);
+        this.selectedTab.set(0);
     }
 
     public openAddDialog(): void {

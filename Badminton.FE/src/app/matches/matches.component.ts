@@ -50,8 +50,7 @@ import {MatIconButton} from '@angular/material/button';
         MatTable,
         MatNoDataRow,
         MatHeaderCellDef,
-        MatCheckbox,
-        MatIconButton
+        MatCheckbox
     ],
   templateUrl: './matches.component.html',
   styleUrl: './matches.component.scss',

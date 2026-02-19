@@ -18,8 +18,8 @@
             <form novalidate (submit)="onSubmit($event)">
                 <div class="form-wrapper">
                     <div class="button-group">
-                        <button matButton type="button" (click)="openAddDialog()">Add</button>
-                        <button matButton type="button" (click)="clearAllPlayers()">Clear all</button>
+                        <button matButton type="button" (click)="openAddDialog()">Add players</button>
+                        <button matButton type="button" (click)="clearAllPlayers()">Clear players</button>
                     </div>
                     <div class="checkboxes-container">
                         @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
