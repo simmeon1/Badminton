@@ -15,10 +15,12 @@
             </div>
         </mat-expansion-panel>
     </mat-accordion>
-    @if (dataSource().length > 0) {
-        <button matButton type="button" class="syncButton" (click)="syncToForm()">Sync to Form</button>
-    }
-    <mat-table #table [dataSource]="dataSource()" cdkDropList
+    <mat-card>
+        <mat-card-content>
+            @if (dataSource().length > 0) {
+                <button matButton type="button" class="syncButton" (click)="syncToForm()">Sync to Form</button>
+            }
+            <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                         table,
                         $event.item.data.name,
@@ -65,5 +67,7 @@
                 Nothing to display. Did you submit the form?
             }
         </div>
-    </mat-table>
+        </mat-table>
+        </mat-card-content>
+    </mat-card>
 </div>

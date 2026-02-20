@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, computed, inject, Signal, signal, Wr
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
 import {Players} from "./players/players.component";
 import {Matches} from './matches/matches.component';
@@ -29,8 +29,8 @@ import {
     MatExpansionPanelDescription,
     MatExpansionPanelHeader, MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {MatIcon} from "@angular/material/icon";
 import {MatSelectionList, MatListOption} from "@angular/material/list";
+import {MatCard, MatCardContent} from "@angular/material/card";
 
 @Component({
     selector: 'app-root',
@@ -40,7 +40,6 @@ import {MatSelectionList, MatListOption} from "@angular/material/list";
         MatInput,
         MatCheckbox,
         MatButton,
-        MatIcon,
         MatSelectionList,
         MatListOption,
         FormField,
@@ -53,7 +52,8 @@ import {MatSelectionList, MatListOption} from "@angular/material/list";
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,
-        MatIconButton
+        MatCard,
+        MatCardContent
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

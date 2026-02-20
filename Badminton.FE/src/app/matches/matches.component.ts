@@ -25,6 +25,7 @@ import {
 import {MatIcon} from '@angular/material/icon';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIconButton} from '@angular/material/button';
+import {MatCard, MatCardContent} from "@angular/material/card";
 
 @Component({
   selector: 'matches',
@@ -50,7 +51,9 @@ import {MatIconButton} from '@angular/material/button';
         MatTable,
         MatNoDataRow,
         MatHeaderCellDef,
-        MatCheckbox
+        MatCheckbox,
+        MatCard,
+        MatCardContent
     ],
   templateUrl: './matches.component.html',
   styleUrl: './matches.component.scss',

@@ -14,8 +14,10 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-    <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
-    <mat-table #table [dataSource]="dataSource()" cdkDropList
+    <mat-card>
+        <mat-card-content>
+            <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
+            <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                         table,
                         $event.item.data.matchupText,
@@ -77,4 +79,6 @@
             }
         </div>
     </mat-table>
+        </mat-card-content>
+    </mat-card>
 </div>
