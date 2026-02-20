@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, Signal, signal, WritableSignal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
 import {Players} from "./players/players.component";
 import {Matches} from './matches/matches.component';
@@ -29,6 +29,8 @@ import {
     MatExpansionPanelDescription,
     MatExpansionPanelHeader, MatExpansionPanelTitle
 } from '@angular/material/expansion';
+import {MatIcon} from "@angular/material/icon";
+import {MatSelectionList, MatListOption} from "@angular/material/list";
 
 @Component({
     selector: 'app-root',
@@ -38,6 +40,9 @@ import {
         MatInput,
         MatCheckbox,
         MatButton,
+        MatIcon,
+        MatSelectionList,
+        MatListOption,
         FormField,
         Players,
         MatTabGroup,
@@ -47,7 +52,8 @@ import {
         MatExpansionPanel,
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
-        MatExpansionPanelTitle
+        MatExpansionPanelTitle,
+        MatIconButton
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
@@ -188,6 +194,21 @@ export class App {
     public clearAllPlayers(): void {
         this.form.names().value.set([]);
     }
+
+    public removePlayer(index: number): void {
+        const currentNames = this.form.names().value();
+        const updated = currentNames.filter((_, i) => i !== index);
+        this.form.names().value.set(updated);
+    }
+
+    // https://github.com/angular/components/issues/15477
+    // mat-list-option doesn't update its value. List needs to be rebuilt
+    public toggleCheckbox(i: number) {
+        const checkboxes = this.form.names().value();
+        const checkbox = checkboxes[i];
+        checkbox.checked = !checkbox.checked;
+        this.form.names().value.set([...checkboxes])
+    }
 }
 
 export interface FormParams {
@@ -248,4 +269,3 @@ export class AddNamesDialog {
 interface AddNamesDialogData {
     namesText: string;
 }
-

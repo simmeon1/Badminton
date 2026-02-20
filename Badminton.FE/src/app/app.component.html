@@ -17,16 +17,21 @@
             </mat-accordion>
             <form novalidate (submit)="onSubmit($event)">
                 <div class="form-wrapper">
-                    <div class="button-group">
-                        <button matButton type="button" (click)="openAddDialog()">Add players</button>
-                        <button matButton type="button" (click)="clearAllPlayers()">Clear players</button>
-                    </div>
                     <div class="checkboxes-container">
-                        @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
-                            <div>
-                                <mat-checkbox [formField]="this.form.names[i].checked">{{ nameCheckbox.name }}</mat-checkbox>
-                            </div>
-                        } @empty {
+                        @if (this.form.names().value().length > 0) {
+                            <mat-selection-list aria-label="Player list">
+                                @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
+                                    <mat-list-option [togglePosition]="'before'" [selected]="nameCheckbox.checked" (click)="toggleCheckbox(i)">
+                                        <div class="option-content">
+                                            <span class="option-label">{{ nameCheckbox.name }}</span>
+<!--                                            <button mat-icon-button type="button" (click)="removePlayer(i); $event.stopPropagation();" title="Delete player">-->
+<!--                                                <mat-icon>delete</mat-icon>-->
+<!--                                            </button>-->
+                                        </div>
+                                    </mat-list-option>
+                                }
+                            </mat-selection-list>
+                        } @else {
                             Use the Add button to add players.
                         }
                     </div>
@@ -45,7 +50,11 @@
                     <div>
                         <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
                     </div>
-                    <button matButton="filled" type="submit" class="submit" [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit</button>
+                    <div class="button-group">
+                        <button matButton="filled" type="submit" class="submit" [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit</button>
+                        <button matButton type="button" (click)="openAddDialog()">Add players</button>
+                        <button matButton type="button" (click)="clearAllPlayers()">Clear players</button>
+                    </div>
                 </div>
             </form>
         </div>
