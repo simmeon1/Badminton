@@ -25,7 +25,6 @@ import {
 import {SelectedIndexAndRow} from './selected-index-and-row';
 import {MatButton} from '@angular/material/button';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatCard, MatCardContent} from "@angular/material/card";
 
 @Component({
     selector: 'players',
@@ -50,9 +49,7 @@ import {MatCard, MatCardContent} from "@angular/material/card";
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,
-        MatButton,
-        MatCard,
-        MatCardContent
+        MatButton
     ],
     templateUrl: './players.component.html',
     styleUrl: './players.component.scss',
@@ -156,3 +153,4 @@ interface PlayerRow {
     name: string
     partners: string[]
 }
+
