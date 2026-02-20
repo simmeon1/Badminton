@@ -81,18 +81,18 @@ export class App {
     public constructor() {
         const names = [
             'Alfa',
-            'Bravo',
-            'Charlie',
-            'Delta',
-            'Echo',
-            'Foxtrot',
-            'Golf',
-            'Hotel',
-            'India',
-            'Juliett',
-            'Kilo',
-            'Lima',
-            'Mike',
+            // 'Bravo',
+            // 'Charlie',
+            // 'Delta',
+            // 'Echo',
+            // 'Foxtrot',
+            // 'Golf',
+            // 'Hotel',
+            // 'India',
+            // 'Juliett',
+            // 'Kilo',
+            // 'Lima',
+            // 'Mike',
         ]
 
         const nameCheckboxes = names.map(n => ({ name: n, checked: true } as NameCheckbox));
