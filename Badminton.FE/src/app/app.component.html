@@ -1,52 +1,54 @@
 <mat-tab-group [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
-    <mat-tab label="Form">
-        <div class="flex-column-16">
-            <mat-accordion>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>Instructions</mat-panel-title>
-                        <mat-panel-description></mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <ul>
-                        <li>Use the Add button to add new players from text input.</li>
-                        <li>Check/uncheck players to enable/disable them.</li>
-                        <li>Checking Shuffle names will produce a shuffled Players tab.</li>
-                        <li>Click Submit to populate the Players and Matches tabs.</li>
-                    </ul>
-                </mat-expansion-panel>
-            </mat-accordion>
-            <form novalidate (submit)="onSubmit($event)" class="flex-column-16">
-                <div class="checkboxes-container">
-                    @if (this.form.names().value().length > 0) {
-                        <mat-selection-list aria-label="Player list">
-                            @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
-                                <mat-list-option [togglePosition]="'before'" [selected]="nameCheckbox.checked"
-                                                 (click)="toggleCheckbox(i)">
-                                    <span>{{ nameCheckbox.name }}</span>
-                                </mat-list-option>
-                            }
-                        </mat-selection-list>
-                    } @else {
-                        Use the Add button to add players.
-                    }
-                </div>
-                <mat-form-field>
-                    <mat-label>Minimum games each?</mat-label>
-                    <input type="number" matInput [formField]="form.minGames">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>How many courts?</mat-label>
-                    <input type="number" matInput [formField]="form.courtCount">
-                </mat-form-field>
-                <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
-                <div class="flex-row-8">
-                    <button matButton="filled" type="submit"
-                            [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit
-                    </button>
-                    <button matButton type="button" (click)="openAddDialog()">Add players</button>
-                    <button matButton type="button" (click)="clearAllPlayers()">Clear players</button>
-                </div>
-            </form>
+    <mat-tab label="Form" [bodyClass]="'height-100'">
+        <div class="height-100">
+            <div class="flex-column-16">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Instructions</mat-panel-title>
+                            <mat-panel-description></mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <ul>
+                            <li>Use the Add button to add new players from text input.</li>
+                            <li>Check/uncheck players to enable/disable them.</li>
+                            <li>Checking Shuffle names will produce a shuffled Players tab.</li>
+                            <li>Click Submit to populate the Players and Matches tabs.</li>
+                        </ul>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <form novalidate (submit)="onSubmit($event)" class="flex-column-16">
+                    <div class="checkboxes-container">
+                        @if (this.form.names().value().length > 0) {
+                            <mat-selection-list aria-label="Player list">
+                                @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
+                                    <mat-list-option [togglePosition]="'before'" [selected]="nameCheckbox.checked"
+                                                     (click)="toggleCheckbox(i)">
+                                        <span>{{ nameCheckbox.name }}</span>
+                                    </mat-list-option>
+                                }
+                            </mat-selection-list>
+                        } @else {
+                            Use the Add button to add players.
+                        }
+                    </div>
+                    <mat-form-field>
+                        <mat-label>Minimum games each?</mat-label>
+                        <input type="number" matInput [formField]="form.minGames">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>How many courts?</mat-label>
+                        <input type="number" matInput [formField]="form.courtCount">
+                    </mat-form-field>
+                    <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
+                    <div class="flex-row-8">
+                        <button matButton="filled" type="submit"
+                                [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit
+                        </button>
+                        <button matButton type="button" (click)="openAddDialog()">Add players</button>
+                        <button matButton type="button" (click)="clearAllPlayers()">Clear players</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </mat-tab>
     <mat-tab label="Players">
