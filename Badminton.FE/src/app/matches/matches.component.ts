@@ -131,6 +131,10 @@ export class Matches {
     public trackByText(index: number, item: MatchupRow): string {
         return item.matchupText;
     }
+
+    public getIndex(row: MatchupRow) {
+        return (this.dataSource().indexOf(row) + 1) - this.dataSource().filter(r => r.courtIndex === row.courtIndex - 1).length;
+    }
 }
 
 interface MatchupRow {

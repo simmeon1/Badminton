@@ -41,7 +41,7 @@
 
         <ng-container matColumnDef="rowIndex">
             <mat-header-cell *matHeaderCellDef>№</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ dataSource().indexOf(element) + 1 }}</mat-cell>
+            <mat-cell *matCellDef="let element"> {{ getIndex(element) }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="matchupIndex">
