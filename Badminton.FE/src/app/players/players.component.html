@@ -1,4 +1,4 @@
-<div class="container">
+<div class="flex-column-16 height-100">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -16,7 +16,9 @@
         </mat-expansion-panel>
     </mat-accordion>
     @if (dataSource().length > 0) {
-        <button matButton type="button" class="syncButton" (click)="syncToForm()">Sync to Form</button>
+        <div class="flex-row-8">
+            <button matButton type="button" class="syncButton" (click)="syncToForm()">Sync to Form</button>
+        </div>
     }
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(

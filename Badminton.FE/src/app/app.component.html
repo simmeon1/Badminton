@@ -15,6 +15,10 @@
                     </ul>
                 </mat-expansion-panel>
             </mat-accordion>
+            <div class="flex-row-8">
+                <button matButton type="button" (click)="openAddDialog()">Add players</button>
+                <button matButton type="button" (click)="clearAllPlayers()">Clear all players</button>
+            </div>
             <form novalidate (submit)="onSubmit($event)" class="flex-column-16 height-100">
                 <mat-card appearance="outlined" class="height-100">
                     <mat-card-content class="height-100">
@@ -47,8 +51,6 @@
                     <button matButton="filled" type="submit"
                             [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit
                     </button>
-                    <button matButton type="button" (click)="openAddDialog()">Add players</button>
-                    <button matButton type="button" (click)="clearAllPlayers()">Clear players</button>
                 </div>
             </form>
         </div>
