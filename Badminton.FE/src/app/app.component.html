@@ -8,9 +8,9 @@
                         <mat-panel-description></mat-panel-description>
                     </mat-expansion-panel-header>
                     <ul>
-                        <li>Use the Add button to add new players from text input.</li>
-                        <li>Check/uncheck players to enable/disable them.</li>
-                        <li>Checking Shuffle names will produce a shuffled Players tab.</li>
+                        <li>Use the Add players button to add new players from text input.</li>
+                        <li>Check or uncheck players to include or exclude them from the Players tab.</li>
+                        <li>Checking Shuffle players will produce a shuffled Players tab.</li>
                         <li>Click Submit to populate the Players and Matches tabs.</li>
                     </ul>
                 </mat-expansion-panel>
@@ -33,7 +33,7 @@
                                     }
                                 </mat-selection-list>
                             } @else {
-                                Use the Add button to add players.
+                                Use the Add players button to add players.
                             }
                         </div>
                     </mat-card-content>
@@ -46,7 +46,7 @@
                     <mat-label>How many courts?</mat-label>
                     <input type="number" matInput [formField]="form.courtCount">
                 </mat-form-field>
-                <mat-checkbox [formField]="form.shuffle">Shuffle names</mat-checkbox>
+                <mat-checkbox [formField]="form.shuffle">Shuffle players</mat-checkbox>
                 <div class="flex-row-8">
                     <button matButton="filled" type="submit"
                             [disabled]="form().invalid() || !hasCheckedPlayers() || responseResource.isLoading()">Submit
