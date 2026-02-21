@@ -1,4 +1,4 @@
-<div class="flex-column-16 height-100">
+<div class="flex-column-8 height-100">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -17,10 +17,10 @@
         <button matButton type="button" (click)="openAddDialog()">Add players</button>
         <button matButton type="button" (click)="clearAllPlayers()">Clear all players</button>
     </div>
-    <form novalidate (submit)="onSubmit($event)" class="flex-column-16 height-100">
+    <form novalidate (submit)="onSubmit($event)" class="flex-column-8 height-100">
         <mat-card appearance="outlined" class="height-100">
             <mat-card-content class="height-100">
-                <div class="flex-column-16 height-100">
+                <div class="flex-column-8 height-100">
                     @if (form().names().value().length > 0) {
                         <mat-selection-list aria-label="Player list">
                             @for (nameCheckbox of form().names().value(); track nameCheckbox.name; let i = $index) {
