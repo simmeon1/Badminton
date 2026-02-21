@@ -14,7 +14,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <form novalidate (submit)="onSubmit($event)" class="flex-column-160 height-1000">
-        <div class="checkboxes-container height-1000">
+        <div class="flex-column-160 height-1000">
             @if (this.form.names().value().length > 0) {
                 <mat-selection-list aria-label="Player list">
                     @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {

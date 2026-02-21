@@ -13,6 +13,11 @@
   gap: 16px;
 }
 
+.mat-mdc-selection-list {
+  flex: 1 1 0;
+  overflow: auto;
+}
+
 .flex-row-8 {
   display: flex;
   flex-direction: row;
@@ -21,8 +26,4 @@
 
 .height-1000 {
   height: 100%;
-}
-
-.checkboxes-container {
-  overflow: auto;
 }
