@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, computed, inject, Signal, signal, WritableSignal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {FieldTree, form, FormField, max, min, required} from "@angular/forms/signals";
+import {FieldTree, form, FormField, min, required} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatButton} from "@angular/material/button";
 import shuffle from "knuth-shuffle-seeded";
 import {Players} from "./players/players.component";
 import {Matches} from './matches/matches.component';
@@ -29,7 +29,6 @@ import {
     MatExpansionPanelDescription,
     MatExpansionPanelHeader, MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {MatIcon} from "@angular/material/icon";
 import {MatSelectionList, MatListOption} from "@angular/material/list";
 import {MatCard, MatCardContent} from '@angular/material/card';
 
@@ -41,7 +40,6 @@ import {MatCard, MatCardContent} from '@angular/material/card';
         MatInput,
         MatCheckbox,
         MatButton,
-        MatIcon,
         MatSelectionList,
         MatListOption,
         FormField,
@@ -108,10 +106,8 @@ export class App {
             }), (schemaPath) => {
                 required(schemaPath.minGames);
                 min(schemaPath.minGames, 1);
-                max(schemaPath.minGames, 10);
                 required(schemaPath.courtCount);
                 min(schemaPath.courtCount, 1);
-                max(schemaPath.courtCount, 10);
             }
         )
     }
@@ -188,7 +184,7 @@ export class App {
                 const uniqueNewNames = newNames.filter(n => !existingNameSet.has(n));
                 const nameCheckboxes = uniqueNewNames.map(n => ({ name: n, checked: true } as NameCheckbox));
 
-                this.form.names().value.set([...currentNames, ...nameCheckboxes]);
+                this.form.names().value.set([...nameCheckboxes, ...currentNames]);
             }
         });
     }
