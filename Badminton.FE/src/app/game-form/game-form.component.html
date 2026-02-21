@@ -8,15 +8,10 @@
             <ul>
                 <li>Use the Add players button to add new players from text input.</li>
                 <li>Check or uncheck players to include or exclude them from the Players tab.</li>
-                <li>Checking Shuffle players will produce a shuffled Players tab.</li>
                 <li>Click Submit to populate the Players and Matches tabs.</li>
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-    <div class="flex-row-8">
-        <button matButton type="button" (click)="openAddDialog()">Add players</button>
-        <button matButton type="button" (click)="clearAllPlayers()">Clear all players</button>
-    </div>
     <form novalidate (submit)="onSubmit($event)" class="flex-column-8 height-100">
         <mat-card appearance="outlined" class="height-100">
             <mat-card-content class="height-100">
@@ -36,18 +31,24 @@
                 </div>
             </mat-card-content>
         </mat-card>
-        <mat-form-field>
-            <mat-label>Minimum games each?</mat-label>
-            <input type="number" matInput [formField]="form().minGames">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>How many courts?</mat-label>
-            <input type="number" matInput [formField]="form().courtCount">
-        </mat-form-field>
+        <div class="flex-row-8">
+            <mat-form-field>
+                <mat-label>Minimum games each?</mat-label>
+                <input type="number" matInput [formField]="form().minGames">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>How many courts?</mat-label>
+                <input type="number" matInput [formField]="form().courtCount">
+            </mat-form-field>
+        </div>
         <div class="flex-row-8">
             <button matButton="filled" type="submit" class="submit-button" [disabled]="form()().invalid() || !hasCheckedPlayers() || isLoading()">
                 Submit
             </button>
+            <button matButton type="button" (click)="openAddDialog()">Add players</button>
+            @if (form().names().value().length > 0) {
+                <button matButton type="button" (click)="clearAllPlayers()">Clear all players</button>
+            }
         </div>
     </form>
 </div>
