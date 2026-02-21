@@ -1,5 +1,13 @@
 @import "./shared";
 
+::ng-deep .mat-mdc-tab-body {
+  padding-bottom: 16px;
+}
+
+::ng-deep .mat-mdc-tab-body .mat-mdc-tab-body-content {
+  overflow: hidden;
+}
+
 .mat-mdc-tab-group, ::ng-deep .mat-mdc-tab-body-wrapper {
   height: 100%;
 }
