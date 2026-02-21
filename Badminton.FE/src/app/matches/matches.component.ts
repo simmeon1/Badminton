@@ -24,7 +24,7 @@ import {
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'matches',

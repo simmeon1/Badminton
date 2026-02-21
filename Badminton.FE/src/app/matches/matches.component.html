@@ -1,4 +1,4 @@
-<div class="container">
+<div class="flex-column-16 height-100">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -14,7 +14,9 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-    <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
+    <div class="flex-row-8">
+        <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
+    </div>
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
                         table,
