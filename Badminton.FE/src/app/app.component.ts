@@ -31,6 +31,7 @@ import {
 } from '@angular/material/expansion';
 import {MatIcon} from "@angular/material/icon";
 import {MatSelectionList, MatListOption} from "@angular/material/list";
+import {MatCard, MatCardContent} from '@angular/material/card';
 
 @Component({
     selector: 'app-root',
@@ -52,7 +53,9 @@ import {MatSelectionList, MatListOption} from "@angular/material/list";
         MatExpansionPanel,
         MatExpansionPanelDescription,
         MatExpansionPanelHeader,
-        MatExpansionPanelTitle
+        MatExpansionPanelTitle,
+        MatCard,
+        MatCardContent
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
