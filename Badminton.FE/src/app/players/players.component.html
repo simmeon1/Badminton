@@ -30,7 +30,6 @@
                cdkDropListData="dataSource"
                [trackBy]="trackByName"
                [class.is-loading]="isLoading()"
-               class="padding-bottom-8"
     >
         <ng-container matColumnDef="position" sticky>
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -70,4 +69,5 @@
             }
         </div>
     </mat-table>
+    <div class="spacer"></div>
 </div>

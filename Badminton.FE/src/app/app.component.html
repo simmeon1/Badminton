@@ -19,7 +19,7 @@
                 <button matButton type="button" (click)="openAddDialog()">Add players</button>
                 <button matButton type="button" (click)="clearAllPlayers()">Clear all players</button>
             </div>
-            <form novalidate (submit)="onSubmit($event)" class="flex-column-16 height-100 padding-bottom-8">
+            <form novalidate (submit)="onSubmit($event)" class="flex-column-16 height-100">
                 <mat-card appearance="outlined" class="height-100">
                     <mat-card-content class="height-100">
                         <div class="flex-column-16 height-100">
@@ -54,6 +54,7 @@
                 </div>
             </form>
         </div>
+        <div class="spacer"></div>
     </mat-tab>
     <mat-tab label="Players">
         <players [latestResponse]="responseResource.value()"
