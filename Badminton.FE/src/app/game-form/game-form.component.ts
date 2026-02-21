@@ -109,10 +109,12 @@ export class GameForm {
     // https://github.com/angular/components/issues/15477
     // mat-list-option doesn't update its value. List needs to be rebuilt
     public toggleCheckbox(i: number) {
-        const checkboxes = this.form().names().value();
-        const checkbox = checkboxes[i];
-        checkbox.checked = !checkbox.checked;
-        this.form().names().value.set([...checkboxes])
+        const checkedFormField = this.form().names[i].checked;
+        checkedFormField().value.set(!checkedFormField().value());
+        // const checkboxes = this.form().names().value();
+        // const checkbox = checkboxes[i];
+        // checkbox.checked = !checkbox.checked;
+        // this.form().names().value.set([...checkboxes])
     }
 }
 
