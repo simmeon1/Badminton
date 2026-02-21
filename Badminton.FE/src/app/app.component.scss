@@ -3,11 +3,15 @@
   height: 100%;
 }
 
-.mat-mdc-tab-group, .mat-mdc-tab-body-wrapper {
+.mat-mdc-tab-group, ::ng-deep .mat-mdc-tab-body-wrapper {
   height: 100%;
 }
 
-.flex-column-160 {
+::ng-deep .mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+
+.flex-column-16 {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -24,6 +28,6 @@
   gap: 8px;
 }
 
-.height-1000 {
+.height-100 {
   height: 100%;
 }
