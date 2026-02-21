@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, input, output, signal} from '@angular/core';
 import {MatchupCollection, Pairing} from "../matchup-builder.service";
 import {
     MatCell,
@@ -24,7 +24,6 @@ import {
 } from '@angular/material/expansion';
 import {SelectedIndexAndRow} from './selected-index-and-row';
 import {MatButton} from '@angular/material/button';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'players',
@@ -88,7 +87,6 @@ export class Players {
         }
         return undefined;
     });
-    private readonly snackBar = inject(MatSnackBar);
 
     private mapResponse(r: Record<number, MatchupCollection>): PlayerRow[] {
         const rows: PlayerRow[] = [];
@@ -136,10 +134,8 @@ export class Players {
         this.selectedPlayerChanged.emit(this.selectedPlayer() === name ? undefined : name);
     }
 
-    public syncToForm() {
-        const names = this.dataSource().map(row => row.name);
-        this.playersReordered.emit(names);
-        this.snackBar.open('Synced to Form', undefined, {duration: 500});
+    public playersReorderedClicked() {
+        this.playersReordered.emit(this.dataSource().map(row => row.name));
     }
 
     public isPartnerOfSelected(name: string) {
