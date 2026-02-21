@@ -11,32 +11,18 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 0;
 }
 
 .flex-row-8 {
   display: flex;
   flex-direction: row;
   gap: 8px;
-  flex-shrink: 0;
 }
 
 .height-1000 {
   height: 100%;
 }
 
-.flex-grow {
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .checkboxes-container {
-  overflow-y: auto;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 12px;
+  overflow: auto;
 }
