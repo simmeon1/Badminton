@@ -123,7 +123,7 @@ export class GameForm {
         </mat-dialog-content>
         <mat-dialog-actions>
             <button matButton (click)="onCancel()">Cancel</button>
-            <button matButton [mat-dialog-close]="namesText" cdkFocusInitial>Ok</button>
+            <button matButton [mat-dialog-close]="namesText" cdkFocusInitial>OK</button>
         </mat-dialog-actions>
     `,
     imports: [
