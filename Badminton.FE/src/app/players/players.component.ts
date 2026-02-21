@@ -139,6 +139,12 @@ export class Players {
         this.datasourceChanged.emit(shuffle(this.dataSource().map(r => r.name)))
     }
 
+    public sortAtoZ() {
+        const current = this.dataSource().map(r => r.name);
+        const sorted = [...current].sort((a, b) => a.localeCompare(b));
+        this.datasourceChanged.emit(JSON.stringify(current) === JSON.stringify(sorted) ? sorted.reverse() : sorted);
+    }
+
     public playersReorderedClicked() {
         this.playersReordered.emit(this.dataSource().map(row => row.name));
     }
