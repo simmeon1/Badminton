@@ -86,21 +86,21 @@ export class GameForm {
             }
         )
 
-        effect(() => {
-            // Create a map of names to their checkbox state
-            const currentNames = this.form.names().value();
-            const nameStateMap = new Map(currentNames.map(n => [n.name, n.checked]));
-
-            // Reorder checkboxes to match the table order, preserving their checked state
-            const reorderedCheckboxes = this.updatedNames()
-                .filter(name => nameStateMap.has(name))
-                .map(name => ({
-                    name,
-                    checked: nameStateMap.get(name) ?? false
-                } as NameCheckbox));
-
-            this.form.names().value.set(reorderedCheckboxes);
-        });
+        // effect(() => {
+        //     // Create a map of names to their checkbox state
+        //     const currentNames = this.form.names().value();
+        //     const nameStateMap = new Map(currentNames.map(n => [n.name, n.checked]));
+        //
+        //     // Reorder checkboxes to match the table order, preserving their checked state
+        //     const reorderedCheckboxes = this.updatedNames()
+        //         .filter(name => nameStateMap.has(name))
+        //         .map(name => ({
+        //             name,
+        //             checked: nameStateMap.get(name) ?? false
+        //         } as NameCheckbox));
+        //
+        //     this.form.names().value.set(reorderedCheckboxes);
+        // });
     }
 
     public openAddDialog(): void {
