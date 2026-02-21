@@ -106,15 +106,8 @@ export class GameForm {
         return this.form().names().value().some(n => n.checked);
     });
 
-    // https://github.com/angular/components/issues/15477
-    // mat-list-option doesn't update its value. List needs to be rebuilt
-    public toggleCheckbox(i: number) {
-        const checkedFormField = this.form().names[i].checked;
-        checkedFormField().value.set(!checkedFormField().value());
-        // const checkboxes = this.form().names().value();
-        // const checkbox = checkboxes[i];
-        // checkbox.checked = !checkbox.checked;
-        // this.form().names().value.set([...checkboxes])
+    public toggleCheckbox(checkboxSignal: FieldTree<boolean, string>) {
+        checkboxSignal().value.set(!checkboxSignal().value());
     }
 }
 
