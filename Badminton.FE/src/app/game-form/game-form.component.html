@@ -23,7 +23,7 @@
                 <div class="flex-column-16 height-100">
                     @if (form().names().value().length > 0) {
                         <mat-selection-list aria-label="Player list">
-                            @for (nameCheckbox of form().names().value(); track nameCheckbox; let i = $index) {
+                            @for (nameCheckbox of form().names().value(); track nameCheckbox.name; let i = $index) {
                                 <mat-list-option [togglePosition]="'before'" [selected]="nameCheckbox.checked"
                                                  (click)="toggleCheckbox(i)">
                                     <span>{{ nameCheckbox.name }}</span>
