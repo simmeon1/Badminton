@@ -44,7 +44,6 @@
             <mat-label>How many courts?</mat-label>
             <input type="number" matInput [formField]="form().courtCount">
         </mat-form-field>
-        <mat-checkbox [formField]="form().shuffle">Shuffle players</mat-checkbox>
         <div class="flex-row-8">
             <button matButton="filled" type="submit" class="submit-button" [disabled]="form()().invalid() || !hasCheckedPlayers() || isLoading()">
                 Submit

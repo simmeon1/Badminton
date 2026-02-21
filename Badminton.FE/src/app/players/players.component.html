@@ -18,7 +18,8 @@
     </mat-accordion>
     @if (dataSource().length > 0) {
         <div class="flex-row-8">
-            <button matButton type="button" class="syncButton" (click)="playersReorderedClicked()">Send to Form</button>
+            <button matButton type="button" (click)="playersReorderedClicked()">Send to Form</button>
+            <button matButton type="button" (click)="shuffle()">Shuffle</button>
         </div>
     }
     <mat-table #table [dataSource]="dataSource()" cdkDropList

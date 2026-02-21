@@ -24,6 +24,7 @@ import {
 } from '@angular/material/expansion';
 import {SelectedIndexAndRow} from './selected-index-and-row';
 import {MatButton} from '@angular/material/button';
+import shuffle from 'knuth-shuffle-seeded';
 
 @Component({
     selector: 'players',
@@ -132,6 +133,10 @@ export class Players {
 
     public selectIndex(name: string) {
         this.selectedPlayerChanged.emit(this.selectedPlayer() === name ? undefined : name);
+    }
+
+    public shuffle() {
+        this.datasourceChanged.emit(shuffle(this.dataSource().map(r => r.name)))
     }
 
     public playersReorderedClicked() {

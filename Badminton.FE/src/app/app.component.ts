@@ -58,7 +58,6 @@ export class App {
                 names: nameCheckboxes,
                 minGames: 4,
                 courtCount: 2,
-                shuffle: false,
             }), (schemaPath) => {
                 required(schemaPath.minGames);
                 min(schemaPath.minGames, 1);
@@ -118,5 +117,4 @@ export interface Form {
     names: NameCheckbox[];
     minGames: number;
     courtCount: number;
-    shuffle: boolean;
 }

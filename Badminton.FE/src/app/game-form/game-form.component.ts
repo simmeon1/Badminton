@@ -24,7 +24,6 @@ import {
 } from '@angular/material/expansion';
 import {MatSelectionList, MatListOption} from "@angular/material/list";
 import {MatCard, MatCardContent} from '@angular/material/card';
-import shuffle from 'knuth-shuffle-seeded';
 import {Form, NameCheckbox, QueryParams} from '../app.component';
 
 @Component({
@@ -33,7 +32,6 @@ import {Form, NameCheckbox, QueryParams} from '../app.component';
       MatFormField,
       MatLabel,
       MatInput,
-      MatCheckbox,
       MatButton,
       MatSelectionList,
       MatListOption,
@@ -85,9 +83,6 @@ export class GameForm {
     public onSubmit($event: SubmitEvent) {
         $event.preventDefault();
         const p = this.buildQueryParams();
-        if (this.form().shuffle().value()) {
-            shuffle(p.names);
-        }
         this.formSubmitted.emit(p)
     }
 
