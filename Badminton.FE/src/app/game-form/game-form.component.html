@@ -46,7 +46,7 @@
         </mat-form-field>
         <mat-checkbox [formField]="form().shuffle">Shuffle players</mat-checkbox>
         <div class="flex-row-8">
-            <button matButton="filled" type="submit" [disabled]="form()().invalid() || !hasCheckedPlayers() || isLoading()">
+            <button matButton="filled" type="submit" class="submit-button" [disabled]="form()().invalid() || !hasCheckedPlayers() || isLoading()">
                 Submit
             </button>
         </div>
