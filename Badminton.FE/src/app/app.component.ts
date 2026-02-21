@@ -85,18 +85,14 @@ export class App {
 
     public playersReordered(orderedNames: string[]) {
         this.selectedTab.set(0);
-        // Create a map of names to their checkbox state
-        const currentNames = this.form.names().value();
-        const nameStateMap = new Map(currentNames.map(n => [n.name, n.checked]));
-
-        // Reorder checkboxes to match the table order, preserving their checked state
-        const reorderedCheckboxes = orderedNames
-            .filter(name => nameStateMap.has(name))
-            .map(name => ({
-                name,
-                checked: nameStateMap.get(name) ?? false
-            } as NameCheckbox));
-
+        const reorderedCheckboxes: NameCheckbox[] = [...new Set<string>(orderedNames.concat(this.form.names().value().map(n => n.name)))]
+            .map(n => {
+                const curr = this.form.names().value().find(nn => nn.name === n);
+                return {
+                    name: n,
+                    checked: curr ? curr.checked : false
+                }
+            });
         this.form.names().value.set(reorderedCheckboxes);
     }
 
