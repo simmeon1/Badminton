@@ -1,17 +1,15 @@
 <mat-tab-group [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
     <mat-tab label="Form">
-        <game-form [updatedNames]="updatedNames()" [isLoading]="responseResource.isLoading()" (formSubmitted)="formSubmitted($event)">
-        </game-form>
+        <game-form [isLoading]="responseResource.isLoading()" (formSubmitted)="formSubmitted($event)" [form]="form"></game-form>
     </mat-tab>
     <mat-tab label="Players">
         <players [latestResponse]="responseResource.value()"
                  [isLoading]="responseResource.isLoading()"
                  [selectedPlayer]="selectedPlayer()"
                  (datasourceChanged)="datasourceChanged($event)"
-                 (playersReordered)="copyNamesToForm($event)"
+                 (playersReordered)="playersReordered($event)"
                  (selectedPlayerChanged)="selectedPlayerChanged($event)"
-        >
-        </players>
+        ></players>
     </mat-tab>
     <mat-tab label="Matches">
         <matches

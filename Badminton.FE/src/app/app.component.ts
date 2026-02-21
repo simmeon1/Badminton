@@ -6,6 +6,7 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {of} from 'rxjs';
 import {MatchupBuilder, MatchupCollection} from './matchup-builder.service';
 import {GameForm} from './game-form/game-form.component';
+import {FieldTree, form, min, required} from '@angular/forms/signals';
 
 @Component({
     selector: 'app-root',
@@ -23,7 +24,6 @@ import {GameForm} from './game-form/game-form.component';
 
 export class App {
     private readonly matchupBuilder = inject(MatchupBuilder);
-    public readonly updatedNames = signal<string[]>([]);
     public readonly query = signal<QueryParams | undefined>(undefined);
     public readonly selectedTab = signal<number>(0);
     public readonly selectedPlayer = signal<string | undefined>(undefined);
@@ -36,22 +36,68 @@ export class App {
                 p.params.courtCount
             )),
     });
+    public readonly form: FieldTree<Form>;
+
+    public constructor() {
+        const nameCheckboxes = [
+            'Alfa',
+            'Bravo',
+            'Charlie',
+            'Delta',
+            'Echo',
+            'Foxtrot',
+            'Golf',
+            'Hotel',
+            'India',
+            'Juliett',
+            'Kilo',
+            'Lima',
+            'Mike',
+        ].map(n => ({ name: n, checked: true } as NameCheckbox));
+        this.form = form(signal<Form>({
+                names: nameCheckboxes,
+                minGames: 4,
+                courtCount: 2,
+                shuffle: false,
+            }), (schemaPath) => {
+                required(schemaPath.minGames);
+                min(schemaPath.minGames, 1);
+                required(schemaPath.courtCount);
+                min(schemaPath.courtCount, 1);
+            }
+        )
+    }
 
     public datasourceChanged(names: string[]) {
-        this.query.set({
-            names,
-            minGames: this.query()!.minGames,
-            courtCount: this.query()!.courtCount
-        });
+        const q = this.query();
+        if (q) {
+            this.query.set({
+                names,
+                minGames: q.minGames,
+                courtCount: q.courtCount
+            });
+        }
     }
 
     public selectedPlayerChanged(name: string | undefined) {
         this.selectedPlayer.set(name);
     }
 
-    public copyNamesToForm(orderedNames: string[]) {
+    public playersReordered(orderedNames: string[]) {
         this.selectedTab.set(0);
-        this.updatedNames.set(orderedNames);
+        // Create a map of names to their checkbox state
+        const currentNames = this.form.names().value();
+        const nameStateMap = new Map(currentNames.map(n => [n.name, n.checked]));
+
+        // Reorder checkboxes to match the table order, preserving their checked state
+        const reorderedCheckboxes = orderedNames
+            .filter(name => nameStateMap.has(name))
+            .map(name => ({
+                name,
+                checked: nameStateMap.get(name) ?? false
+            } as NameCheckbox));
+
+        this.form.names().value.set(reorderedCheckboxes);
     }
 
     public formSubmitted(p: QueryParams) {
@@ -65,4 +111,16 @@ export interface QueryParams {
     names: string[];
     minGames: number;
     courtCount: number;
+}
+
+export interface NameCheckbox {
+    name: string
+    checked: boolean
+}
+
+export interface Form {
+    names: NameCheckbox[];
+    minGames: number;
+    courtCount: number;
+    shuffle: boolean;
 }

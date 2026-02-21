@@ -21,9 +21,9 @@
         <mat-card appearance="outlined" class="height-100">
             <mat-card-content class="height-100">
                 <div class="flex-column-16 height-100">
-                    @if (this.form.names().value().length > 0) {
+                    @if (form().names().value().length > 0) {
                         <mat-selection-list aria-label="Player list">
-                            @for (nameCheckbox of this.form.names().value(); track nameCheckbox; let i = $index) {
+                            @for (nameCheckbox of form().names().value(); track nameCheckbox; let i = $index) {
                                 <mat-list-option [togglePosition]="'before'" [selected]="nameCheckbox.checked"
                                                  (click)="toggleCheckbox(i)">
                                     <span>{{ nameCheckbox.name }}</span>
@@ -38,15 +38,15 @@
         </mat-card>
         <mat-form-field>
             <mat-label>Minimum games each?</mat-label>
-            <input type="number" matInput [formField]="form.minGames">
+            <input type="number" matInput [formField]="form().minGames">
         </mat-form-field>
         <mat-form-field>
             <mat-label>How many courts?</mat-label>
-            <input type="number" matInput [formField]="form.courtCount">
+            <input type="number" matInput [formField]="form().courtCount">
         </mat-form-field>
-        <mat-checkbox [formField]="form.shuffle">Shuffle players</mat-checkbox>
+        <mat-checkbox [formField]="form().shuffle">Shuffle players</mat-checkbox>
         <div class="flex-row-8">
-            <button matButton="filled" type="submit" [disabled]="form().invalid() || !hasCheckedPlayers() || isLoading()">
+            <button matButton="filled" type="submit" [disabled]="form()().invalid() || !hasCheckedPlayers() || isLoading()">
                 Submit
             </button>
         </div>

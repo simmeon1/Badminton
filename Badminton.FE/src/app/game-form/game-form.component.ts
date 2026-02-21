@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, output} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
-import {FieldTree, form, FormField, min, required} from "@angular/forms/signals";
+import {FieldTree, FormField} from "@angular/forms/signals";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import {
@@ -25,7 +25,7 @@ import {
 import {MatSelectionList, MatListOption} from "@angular/material/list";
 import {MatCard, MatCardContent} from '@angular/material/card';
 import shuffle from 'knuth-shuffle-seeded';
-import {QueryParams} from '../app.component';
+import {Form, NameCheckbox, QueryParams} from '../app.component';
 
 @Component({
   selector: 'game-form',
@@ -51,57 +51,10 @@ import {QueryParams} from '../app.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameForm {
-    public readonly form: FieldTree<Form>;
+    public readonly form = input.required<FieldTree<Form>>();
     private readonly dialog = inject(MatDialog);
-    public readonly updatedNames = input.required<string[]>();
     public readonly isLoading = input.required<boolean>();
     public readonly formSubmitted = output<QueryParams>();
-
-    public constructor() {
-        const nameCheckboxes = [
-            'Alfa',
-            'Bravo',
-            'Charlie',
-            'Delta',
-            'Echo',
-            'Foxtrot',
-            'Golf',
-            'Hotel',
-            'India',
-            'Juliett',
-            'Kilo',
-            'Lima',
-            'Mike',
-        ].map(n => ({ name: n, checked: true } as NameCheckbox));
-        this.form = form(signal<Form>({
-                names: nameCheckboxes,
-                minGames: 4,
-                courtCount: 2,
-                shuffle: false,
-            }), (schemaPath) => {
-                required(schemaPath.minGames);
-                min(schemaPath.minGames, 1);
-                required(schemaPath.courtCount);
-                min(schemaPath.courtCount, 1);
-            }
-        )
-
-        // effect(() => {
-        //     // Create a map of names to their checkbox state
-        //     const currentNames = this.form.names().value();
-        //     const nameStateMap = new Map(currentNames.map(n => [n.name, n.checked]));
-        //
-        //     // Reorder checkboxes to match the table order, preserving their checked state
-        //     const reorderedCheckboxes = this.updatedNames()
-        //         .filter(name => nameStateMap.has(name))
-        //         .map(name => ({
-        //             name,
-        //             checked: nameStateMap.get(name) ?? false
-        //         } as NameCheckbox));
-        //
-        //     this.form.names().value.set(reorderedCheckboxes);
-        // });
-    }
 
     public openAddDialog(): void {
         const dialogRef = this.dialog.open(AddNamesDialog, {
@@ -114,64 +67,53 @@ export class GameForm {
                     .map(n => n.trim())
                     .filter(n => n.length > 0);
 
-                const currentNames = this.form.names().value();
+                const currentNames = this.form().names().value();
                 const existingNameSet = new Set(currentNames.map(n => n.name));
 
                 const uniqueNewNames = newNames.filter(n => !existingNameSet.has(n));
                 const nameCheckboxes = uniqueNewNames.map(n => ({ name: n, checked: true } as NameCheckbox));
 
-                this.form.names().value.set([...nameCheckboxes, ...currentNames]);
+                this.form().names().value.set([...nameCheckboxes, ...currentNames]);
             }
         });
     }
 
     public clearAllPlayers(): void {
-        this.form.names().value.set([]);
+        this.form().names().value.set([]);
     }
 
     public onSubmit($event: SubmitEvent) {
         $event.preventDefault();
         const p = this.buildQueryParams();
-        if (this.form.shuffle().value()) {
+        if (this.form().shuffle().value()) {
             shuffle(p.names);
         }
         this.formSubmitted.emit(p)
     }
 
     private buildQueryParams(): QueryParams {
-        const names = this.form.names().value()
+        const names = this.form().names().value()
             .filter(n => n.checked)
             .map(n => n.name);
         return {
             names,
-            minGames: this.form.minGames().value(),
-            courtCount: this.form.courtCount().value()
+            minGames: this.form().minGames().value(),
+            courtCount: this.form().courtCount().value()
         }
     }
 
     public readonly hasCheckedPlayers = computed(() => {
-        return this.form.names().value().some(n => n.checked);
+        return this.form().names().value().some(n => n.checked);
     });
 
     // https://github.com/angular/components/issues/15477
     // mat-list-option doesn't update its value. List needs to be rebuilt
     public toggleCheckbox(i: number) {
-        const checkboxes = this.form.names().value();
+        const checkboxes = this.form().names().value();
         const checkbox = checkboxes[i];
         checkbox.checked = !checkbox.checked;
-        this.form.names().value.set([...checkboxes])
+        this.form().names().value.set([...checkboxes])
     }
-}
-interface Form {
-    names: NameCheckbox[];
-    minGames: number;
-    courtCount: number;
-    shuffle: boolean;
-}
-
-interface NameCheckbox {
-    name: string
-    checked: boolean
 }
 
 @Component({
