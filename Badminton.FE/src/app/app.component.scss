@@ -1,3 +1,5 @@
+@import "./shared";
+
 :host {
   display: block;
   height: 100%;
@@ -11,23 +13,7 @@
   overflow: hidden !important;
 }
 
-.flex-column-16 {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
 .mat-mdc-selection-list {
   flex: 1 1 0;
   overflow: auto;
-}
-
-.flex-row-8 {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-}
-
-.height-100 {
-  height: 100%;
 }
