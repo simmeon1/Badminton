@@ -50,7 +50,8 @@ import {MatButton} from '@angular/material/button';
         MatTable,
         MatNoDataRow,
         MatHeaderCellDef,
-        MatCheckbox
+        MatCheckbox,
+        MatButton
     ],
   templateUrl: './matches.component.html',
   styleUrl: './matches.component.scss',
@@ -134,6 +135,13 @@ export class Matches {
 
     public getIndex(row: MatchupRow) {
         return (this.dataSource().indexOf(row) + 1) - this.dataSource().filter(r => r.courtIndex === row.courtIndex - 1).length;
+    }
+
+    public reset() {
+        this.dataSource.set([...this.dataSource()].sort((a, b) => {
+            const courtDiff = a.courtIndex - b.courtIndex;
+            return courtDiff !== 0 ? courtDiff : a.matchupIndex - b.matchupIndex;
+        }));
     }
 }
 

@@ -8,6 +8,7 @@
             <ul>
                 <li>Matchups are produced by the ordering in the Players table.</li>
                 <li>Player selection in the Players table carries over here.</li>
+                <li>Reset restores the original order in case it was changed.</li>
                 <li>Checking the Show numbered matchups checkbox will show the indexes similar to the printed sheet.</li>
                 <li>Matchups can be reordered to help prioritize players leaving early.</li>
                 <li>Changes here do not affect the other tabs.</li>
@@ -16,6 +17,7 @@
     </mat-accordion>
     @if (dataSource().length > 0) {
         <div class="flex-row-8">
+            <button matButton type="button" (click)="reset()">Reset</button>
             <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
         </div>
     }
