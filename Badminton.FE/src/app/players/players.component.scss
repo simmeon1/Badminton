@@ -1,28 +1,7 @@
 @use "../shared";
 
-.mat-mdc-cell, .mat-mdc-header-cell {
-  padding: 0 4px
-}
-
-.mat-column-position {
-  padding-left: 12px;
-  flex: 0 1 50px
-}
-
-.mat-column-courtIndex {
-  flex: 0 1 30px
-}
-
 .mat-column-playerIndex {
   flex: 0 1 25px
-}
-
-.even-court {
-  background-color: rgb(211, 211, 211, 0.3);
-}
-
-.selected-row {
-  background-color: lightblue;
 }
 
 .partner-of-selected {

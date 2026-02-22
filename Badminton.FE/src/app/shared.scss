@@ -55,3 +55,16 @@
 .selected-row {
   background-color: lightblue;
 }
+
+.mat-column-position {
+  padding-left: 12px;
+  flex: 0 1 50px
+}
+
+.mat-column-courtIndex {
+  flex: 0 1 30px
+}
+
+.mat-mdc-cell, .mat-mdc-header-cell {
+  padding: 0 4px
+}
