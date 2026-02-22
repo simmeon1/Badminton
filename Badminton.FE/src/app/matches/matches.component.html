@@ -27,9 +27,10 @@
                         $event.item.data.matchupText,
                         $event.currentIndex
                    )"
-               cdkDropListData="dataSource"
+               [cdkDropListData]="dataSource()"
                [trackBy]="trackByText"
                [class.is-loading]="isLoading()"
+               [cdkDropListSortPredicate]="sortPredicate"
     >
         <ng-container matColumnDef="position" sticky>
             <mat-header-cell *matHeaderCellDef></mat-header-cell>

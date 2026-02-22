@@ -143,6 +143,10 @@ export class Matches {
             return courtDiff !== 0 ? courtDiff : a.matchupIndex - b.matchupIndex;
         }));
     }
+
+    public sortPredicate(index: number, item: CdkDrag<MatchupRow>, list: CdkDropList<MatchupRow[]>) {
+        return list.data[index].courtIndex === item.data.courtIndex;
+    }
 }
 
 interface MatchupRow {
