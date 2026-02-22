@@ -1,7 +1,7 @@
 @use "./shared";
 
 ::ng-deep .mat-mdc-tab-body {
-  padding-bottom: 8px;
+  padding: 8px 0;
 }
 
 ::ng-deep .mat-mdc-tab-body .mat-mdc-tab-body-content {
