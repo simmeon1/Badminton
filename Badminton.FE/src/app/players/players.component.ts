@@ -112,10 +112,21 @@ export class Players {
         return rows;
     }
 
-    public drop(table: MatTable<PlayerRow>, movedName: string, currentIndex: number) {
-        const dataSource = [...(table.dataSource as PlayerRow[])];
-        const names = dataSource.map(r => r.name);
-        const previousIndex = names.findIndex(n => n === movedName);
+    public moveDown(selectedRow: SelectedIndexAndRow<PlayerRow>) {
+        const currentIndex = selectedRow.index;
+        const maxIndex = this.dataSource().length - 1;
+        this.move(selectedRow.row.name, currentIndex === maxIndex ? 0 : currentIndex + 1);
+    }
+
+    public moveUp(selectedRow: SelectedIndexAndRow<PlayerRow>) {
+        const currentIndex = selectedRow.index;
+        const maxIndex = this.dataSource().length - 1;
+        this.move(selectedRow.row.name, currentIndex === 0 ? maxIndex : currentIndex - 1);
+    }
+
+    public move(movedName: string, currentIndex: number) {
+        const dataSource = [...this.dataSource()];
+        const previousIndex = this.dataSource().map(r => r.name).findIndex(n => n === movedName);
         if (previousIndex === currentIndex) {
             return;
         }

@@ -20,18 +20,17 @@
     </mat-accordion>
     @if (dataSource().length > 0) {
         <div class="flex-row-8">
+            @if (selectedRow(); as r) {
+                <button matButton type="button" (click)="moveUp(r)">Move Up</button>
+                <button matButton type="button" (click)="moveDown(r)">Move Down</button>
+            }
             <button matButton type="button" (click)="shuffle()">Shuffle</button>
             <button matButton type="button" (click)="sortAtoZ()">Sort A-Z</button>
             <button matButton type="button" (click)="playersReorderedClicked()">Send to Form</button>
         </div>
     }
-    <mat-table #table [dataSource]="dataSource()" cdkDropList
-               (cdkDropListDropped)="drop(
-                        table,
-                        $event.item.data.name,
-                        $event.currentIndex
-                   )"
-               cdkDropListData="dataSource"
+    <mat-table [dataSource]="dataSource()" cdkDropList
+               (cdkDropListDropped)="move($event.item.data.name, $event.currentIndex)"
                [trackBy]="trackByName"
                [class.is-loading]="isLoading()"
     >
