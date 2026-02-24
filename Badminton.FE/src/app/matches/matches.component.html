@@ -18,8 +18,8 @@
         <div class="flex-row-8">
             @if (dataSource().length > 0) {
                 <button matButton type="button" (click)="reset()">Reset</button>
+                <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
             }
-            <mat-checkbox (change)="showIndexesCheckbox.set($event.checked)">Show numbered matchups</mat-checkbox>
         </div>
     <mat-table #table [dataSource]="dataSource()" cdkDropList
                (cdkDropListDropped)="drop(
