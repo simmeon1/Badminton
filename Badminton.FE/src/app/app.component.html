@@ -1,21 +1,26 @@
 <mat-tab-group [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
-    <mat-tab label="Form">
-        <game-form [isLoading]="responseResource.isLoading()" (formSubmitted)="formSubmitted($event)" [form]="form"></game-form>
-    </mat-tab>
-    <mat-tab label="Players">
-        <players [latestResponse]="responseResource.value()"
-                 [isLoading]="responseResource.isLoading()"
-                 [selectedPlayer]="selectedPlayer()"
-                 (datasourceChanged)="datasourceChanged($event)"
-                 (playersReordered)="playersReordered($event)"
-                 (selectedPlayerChanged)="selectedPlayerChanged($event)"
-        ></players>
-    </mat-tab>
-    <mat-tab label="Matches">
-        <matches
-                [latestResponse]="responseResource.value()"
-                [isLoading]="responseResource.isLoading()"
-                [selectedPlayer]="selectedPlayer()"
-        ></matches>
-    </mat-tab>
+  <mat-tab label="Form">
+    <game-form
+      [isLoading]="responseResource.isLoading()"
+      (formSubmitted)="formSubmitted($event)"
+      [form]="form"
+    ></game-form>
+  </mat-tab>
+  <mat-tab label="Players">
+    <players
+      [latestResponse]="responseResource.value()"
+      [isLoading]="responseResource.isLoading()"
+      [selectedPlayer]="selectedPlayer()"
+      (datasourceChanged)="datasourceChanged($event)"
+      (playersReordered)="playersReordered($event)"
+      (selectedPlayerChanged)="selectedPlayerChanged($event)"
+    ></players>
+  </mat-tab>
+  <mat-tab label="Matches">
+    <matches
+      [latestResponse]="responseResource.value()"
+      [isLoading]="responseResource.isLoading()"
+      [selectedPlayer]="selectedPlayer()"
+    ></matches>
+  </mat-tab>
 </mat-tab-group>

@@ -4,13 +4,16 @@
 // as pipelines will not have an .env file from source control but will have env vars explicitly set up.
 
 import fs from 'node:fs';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
 
-const filePath = "./src/environments/environment.ts";
+const filePath = './src/environments/environment.ts';
 let environmentTsContent = fs.readFileSync(filePath, 'utf-8');
 const matches = environmentTsContent.matchAll(/(\w+): '.*?'/g);
 for (const match of matches) {
-  environmentTsContent = environmentTsContent.replaceAll(match[0], match[1] + ": '" + process.env[match[1]] + "'");
+  environmentTsContent = environmentTsContent.replaceAll(
+    match[0],
+    match[1] + ": '" + process.env[match[1]] + "'",
+  );
 }
 fs.writeFileSync(filePath, environmentTsContent);

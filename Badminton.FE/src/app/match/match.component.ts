@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
-import {Matchup} from '../matchup-builder.service';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Matchup } from '../matchup-builder.service';
 
 @Component({
   selector: 'match',
@@ -9,6 +9,6 @@ import {Matchup} from '../matchup-builder.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Match {
-    public readonly selectedPlayer = input<string>();
-    public readonly matchup = input.required<Matchup>();
+  public readonly selectedPlayer = input<string>();
+  public readonly matchup = input.required<Matchup>();
 }
