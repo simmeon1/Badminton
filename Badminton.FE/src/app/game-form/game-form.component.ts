@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, inject, input, output} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FieldTree, FormField} from "@angular/forms/signals";
-import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import {
     MAT_DIALOG_DATA,
@@ -60,7 +59,7 @@ export class GameForm {
         });
 
         dialogRef.afterClosed().subscribe((namesText: string | undefined) => {
-            if (namesText && namesText.trim()) {
+            if (namesText?.trim()) {
                 const newNames = namesText.split('\n')
                     .map(n => n.trim())
                     .filter(n => n.length > 0);

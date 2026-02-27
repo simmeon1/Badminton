@@ -6,11 +6,14 @@ interface ILogger {
 }
 
 class DefaultLogger implements ILogger {
-    writeLine(str: string): void {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    writeLine(str: string): void {
+        // No-op
+    }
 }
 
-export type Pairing = { player1: string; player2: string };
-export type Matchup = { pairing1: Pairing; pairing2: Pairing };
+export interface Pairing { player1: string; player2: string }
+export interface Matchup { pairing1: Pairing; pairing2: Pairing }
 
 export interface MatchupCollection {
     players: Record<number, string>;
@@ -54,8 +57,9 @@ export class MatchupBuilder {
 
             let queue = [...nameChunk];
 
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             while (true) {
-                this.logger.writeLine(`Player count is ${currentNames.length}`);
+                this.logger.writeLine(`Player count is ${currentNames.length.toString()}`);
 
                 // Sorting logic (Mimicking .OrderBy().ThenBy())
                 const pick = [...queue].sort((a, b) => {
