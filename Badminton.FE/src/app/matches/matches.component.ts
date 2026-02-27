@@ -106,7 +106,11 @@ export class Matches {
         for (const [courtIndex, matchupCollection] of Object.entries(r)) {
             const players = matchupCollection.players;
             const getPlayerIndex = (n: string) => {
-                const index = Object.entries(players).find(([index, name]) => name === n)![0];
+                const find = Object.entries(players).find(([, name]) => name === n);
+                if (!find) {
+                    throw new Error('Player index could not be determined')
+                }
+                const index = find[0];
                 return (parseInt(index) + 1).toString();
             }
             const getString = (p1: string, p2: string, p3: string, p4: string) =>

@@ -40,8 +40,7 @@ describe("MatchupBuilder", () => {
     function extractMatchups(matchups: Record<number, MatchupCollection>): Record<number, Matchup[]> {
         const result: Record<number, Matchup[]> = {};
         for (const [a, b] of Object.entries(matchups)) {
-            // @ts-ignore
-            result[a] = b.matchups;
+            result[parseInt(a)] = b.matchups;
         }
         return result;
     }
